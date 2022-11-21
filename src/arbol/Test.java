@@ -9,7 +9,7 @@ public class Test {
         arbol.add(9548, "ouili", 18, 20);
         arbol.mostrar();
         System.out.println("arbol.buscar(\"ouili\").tel = " + arbol.buscar("ouili").tel);
-        arbol.borrar("fel355i");
+        arbol.editar(2, "ali", "", 999, 0, 0);
         arbol.mostrar();
     }
 }

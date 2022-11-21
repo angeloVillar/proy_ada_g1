@@ -38,7 +38,7 @@ public class Arbol {
         } else {
             return buscarR(now.right, nombre);
         }
-     }
+    }
 
     public Nodo buscar(String nombre){
         return buscarR(raiz, nombre);
@@ -88,7 +88,7 @@ public class Arbol {
         if(raiz != null){
             mostrarR(raiz.left, cont);
             cont++;
-            System.out.println(cont + ") " + raiz.nombre);
+            System.out.println(cont + ") " + raiz.nombre + " - " + raiz.tel);
             mostrarR(raiz.right, cont);
             cont++;
         }
@@ -97,6 +97,38 @@ public class Arbol {
     public void mostrar(){
         Nodo rar = this.raiz;
         mostrarR(rar, 0);
+    }
+
+    private Nodo editarR(int opc, Nodo now, String nombre, String nuevo, int tel, int inicio, int fin){
+        if(now == null){
+            return null;
+        }
+        if(comparar(nombre, now.nombre) == 0){
+            switch (opc){
+                case 1:{
+                    now.nombre = nuevo;
+                }
+                case 2:{
+                    now.tel = tel;
+                }
+                case 3:{
+                    now.inicio = inicio;
+                }
+                case 4:{
+                    now.fin = fin;
+                }
+            }
+            return now;
+        }
+        if(comparar(nombre, now.nombre) < 0){
+            now.left = editarR(opc, now.left, nombre, nuevo, tel, inicio, fin);
+        }
+        now.right = editarR(opc, now.right, nombre, nuevo, tel, inicio, fin);
+        return now;
+    }
+
+    public void editar(int opc, String nombre, String nuevo, int tel, int inicio, int fin){
+        raiz = editarR(opc, raiz, nombre, nuevo, tel, inicio, fin);
     }
 
 }
