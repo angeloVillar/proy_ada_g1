@@ -32,4 +32,9 @@ public class Nodo implements Serializable {
     public int getFin() {
         return fin;
     }
+
+    public int getTiempo(){
+        return fin-inicio;
+    }
+
 }
