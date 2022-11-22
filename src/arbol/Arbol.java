@@ -1,11 +1,22 @@
 package arbol;
 
-public class Arbol {
+import java.io.*;
+
+public class Arbol implements Serializable {
     private Nodo raiz;
+    private int cant;
+
+    public Arbol(){
+        raiz = null;
+        cant = 0;
+    }
+
+    public int getCant() {
+        return cant;
+    }
 
     public int comparar(String s1, String s2){
-        int comparisonResult = s1.compareTo(s2);
-        return comparisonResult;
+        return s1.compareTo(s2);
     }
 
     private Nodo addR(Nodo now, int tel, String nombre, int inicio, int fin){
@@ -24,6 +35,7 @@ public class Arbol {
 
     public void add(int tel, String nombre, int inicio, int fin){
         raiz = addR(raiz, tel, nombre, inicio, fin);
+        cant++;
     }
 
     private Nodo buscarR(Nodo now, String nombre){
@@ -74,6 +86,7 @@ public class Arbol {
 
     public void borrar(String nombre){
         raiz = borrarR(raiz, nombre);
+        cant--;
     }
 
     private String findMin(Nodo raiz){
@@ -84,7 +97,7 @@ public class Arbol {
         }
     }
 
-    public void mostrarR(Nodo raiz, int cont){
+    private void mostrarR(Nodo raiz, int cont){
         if(raiz != null){
             mostrarR(raiz.left, cont);
             cont++;
@@ -129,6 +142,46 @@ public class Arbol {
 
     public void editar(int opc, String nombre, String nuevo, int tel, int inicio, int fin){
         raiz = editarR(opc, raiz, nombre, nuevo, tel, inicio, fin);
+    }
+
+    private Nodo[] toArrayR(Nodo raiz, int cont, Nodo[] arr){
+        if(raiz != null){
+            toArrayR(raiz.left, cont, arr);
+            cont++;
+            arr[cont] = raiz;
+            toArrayR(raiz.right, cont, arr);
+            cont++;
+        }
+        return arr;
+    }
+
+    public Nodo[] toArray(){
+        Nodo rar = this.raiz;
+        Nodo[] arr = new Nodo[cant];
+        return toArrayR(rar, -1, arr);
+    }
+
+    private int setCant(Nodo raiz, int cont){
+        if(raiz != null){
+            cont = setCant(raiz.left, cont);
+            cont++;
+            cont = setCant(raiz.right, cont);
+        }
+        return cont;
+    }
+
+    void guardar(String filename) throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename));
+        out.writeObject(raiz);
+        out.close();
+    }
+
+    void cargar(String filename) throws ClassNotFoundException, IOException {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
+        raiz = (Nodo)in.readObject();
+        in.close();
+        Nodo r = raiz;
+        cant = setCant(r, 0);
     }
 
 }

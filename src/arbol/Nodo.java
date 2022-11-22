@@ -1,6 +1,8 @@
 package arbol;
 
-public class Nodo {
+import java.io.Serializable;
+
+public class Nodo implements Serializable {
     int tel;
     String nombre;
     int inicio, fin;
