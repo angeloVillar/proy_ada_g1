@@ -15,6 +15,8 @@ public class Test {
         arbol.mostrar();
         System.out.println("arbol.buscar(\"ouili\").tel = " + arbol.buscar("ouili").tel);
         arbol.editar(2, "ali", "", 999, 0, 0);
+        arbol.editar(1, "ouili", "fred", 9969, 0, 0);
+
         arbol.mostrar();
         System.out.println(" = ");
         Nodo[] arr = arbol.toArray();

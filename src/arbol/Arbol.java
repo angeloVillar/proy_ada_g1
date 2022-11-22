@@ -117,19 +117,16 @@ public class Arbol implements Serializable {
             return null;
         }
         if(comparar(nombre, now.nombre) == 0){
-            switch (opc){
-                case 1:{
-                    now.nombre = nuevo;
+            switch (opc) {
+                case 1 -> {
+                    if (!nombre.equals(nuevo)) {
+                        //add(now.tel, nuevo, now.inicio, now.fin);
+                        //borrar(nombre);
+                    }
                 }
-                case 2:{
-                    now.tel = tel;
-                }
-                case 3:{
-                    now.inicio = inicio;
-                }
-                case 4:{
-                    now.fin = fin;
-                }
+                case 2 -> now.tel = tel;
+                case 3 -> now.inicio = inicio;
+                case 4 -> now.fin = fin;
             }
             return now;
         }
@@ -141,6 +138,11 @@ public class Arbol implements Serializable {
     }
 
     public void editar(int opc, String nombre, String nuevo, int tel, int inicio, int fin){
+        if (opc==1 && !nombre.equals(nuevo)) {
+            Nodo temp = buscar(nombre);
+            add(temp.tel, nuevo, temp.inicio, temp.fin);
+            borrar(nombre);
+        }
         raiz = editarR(opc, raiz, nombre, nuevo, tel, inicio, fin);
     }
 
