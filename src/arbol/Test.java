@@ -1,6 +1,7 @@
 package arbol;
 
 import java.io.IOException;
+import ordenamiento.QuickSort;
 
 public class Test {
     public static void main(String args[]) throws IOException, ClassNotFoundException {
@@ -21,7 +22,11 @@ public class Test {
         System.out.println(" = ");
         Nodo[] arr = arbol.toArray();
         for(int i=0; i<arbol.getCant(); i++){
-            System.out.println("arr[i].nombre = " + arr[i].nombre);
+            System.out.println("arr[i].nombre = " + arr[i].nombre+" - "+arr[i].fin);
+        }
+        QuickSort.quickSort(arr);
+        for(int i=0; i<arbol.getCant(); i++){
+            System.out.println(" arr[i].nombre = " + arr[i].nombre+" - "+arr[i].fin);
         }
         //arbol.guardar();
     }

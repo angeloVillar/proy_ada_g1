@@ -17,4 +17,19 @@ public class Nodo implements Serializable {
         this.right = null;
     }
 
+    public int getTel() {
+        return tel;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public int getInicio() {
+        return inicio;
+    }
+
+    public int getFin() {
+        return fin;
+    }
 }
