@@ -118,12 +118,6 @@ public class Arbol implements Serializable {
         }
         if(comparar(nombre, now.nombre) == 0){
             switch (opc) {
-                case 1 -> {
-                    if (!nombre.equals(nuevo)) {
-                        //add(now.tel, nuevo, now.inicio, now.fin);
-                        //borrar(nombre);
-                    }
-                }
                 case 2 -> now.tel = tel;
                 case 3 -> now.inicio = inicio;
                 case 4 -> now.fin = fin;
@@ -142,6 +136,9 @@ public class Arbol implements Serializable {
             Nodo temp = buscar(nombre);
             add(temp.tel, nuevo, temp.inicio, temp.fin);
             borrar(nombre);
+            return;
+        } else if (opc == 1){
+            return;
         }
         raiz = editarR(opc, raiz, nombre, nuevo, tel, inicio, fin);
     }
@@ -172,14 +169,18 @@ public class Arbol implements Serializable {
         return cont;
     }
 
-    void guardar(String filename) throws IOException {
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename));
+    void guardar() throws IOException {
+        File f = new File("arbol");
+        if(f.exists()){
+            f.delete();
+        }
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("arbol"));
         out.writeObject(raiz);
         out.close();
     }
 
-    void cargar(String filename) throws ClassNotFoundException, IOException {
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
+    void cargar() throws ClassNotFoundException, IOException {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("arbol"));
         raiz = (Nodo)in.readObject();
         in.close();
         Nodo r = raiz;

@@ -23,7 +23,7 @@ public class Test {
         for(int i=0; i<arbol.getCant(); i++){
             System.out.println("arr[i].nombre = " + arr[i].nombre);
         }
-        //arbol.guardar("test");
+        //arbol.guardar();
     }
 }
 
