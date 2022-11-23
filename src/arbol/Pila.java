@@ -21,19 +21,21 @@ public class Pila {
         this.tiempo = t;
     }
 
-    public void push(Nodo pass)
-    {
-        Nodo n = new Nodo(pass.tel, pass.nombre, pass.inicio, pass.fin);
-        if (top == null) {
-            top = n;
+    public void push(Nodo pass){
+        Nodo temp = new Nodo(pass.tel, pass.nombre, pass.inicio, pass.fin);
+        if (temp == null) {
+            System.out.print("\nHeap Overflow");
             return;
         }
-        Nodo temp = top;
-        while (temp.right != null) {
-            temp = temp.right;
+        temp.right = top;
+        top = temp;
+    }
+
+    public void pop(){
+        if (top == null) {
+            return;
         }
-        temp.right = n;
-        cant++;
+        top = (top).right;
     }
 
     public void print(){
