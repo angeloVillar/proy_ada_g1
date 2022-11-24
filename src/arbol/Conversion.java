@@ -20,10 +20,14 @@ public class Conversion {
     public static String timeToString(int sTime){
         String time;
         int hour = sTime/60, min = sTime%60;
-        if (hour >= 12) {
-            hour %= 12;
+        String min2;
+        if(min == 0){
+            time = hour + ":00";
+        } else if(min < 10){
+            time = hour + ":0" + min;
+        } else {
+            time = hour + ":" + min;
         }
-        time = Integer.toString(hour) + ":" + Integer.toString(min);
         return time;
     }
 

@@ -3,13 +3,14 @@ package arbol;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import ordenamiento.QuickSort;
 import horarios.MaxContactos;
 
 public class Test {
-    public static void main(String args[]) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Arbol arbol = new Arbol();
         int opc;
         Scanner sc = new Scanner(System.in);
@@ -22,13 +23,17 @@ public class Test {
                     sc.nextLine();
                     String nom=sc.nextLine();
                     System.out.print("Telefono: ");
-                    int tlf=sc.nextInt();
+                    //sc.nextLine();
+                    String tlf=sc.nextLine();
                     System.out.println("Tiempo disponible: ");
-                    System.out.print("\tHora de inicio: ");
-                    int ini=sc.nextInt();
-                    System.out.print("\tHora de fin: ");
-                    int fn=sc.nextInt();
-                    arbol.add(tlf, nom, ini, fn);
+                    System.out.print("Hora de inicio (HH:MM): ");
+                    //sc.nextLine();
+                    String ini=sc.nextLine();
+                    //System.out.println("\n"+Conversion.stringToTime(ini)+"\n");
+                    System.out.print("Hora de fin (HH:MM): ");
+                    String fn=sc.nextLine();
+                    //System.out.println("\n"+Conversion.stringToTime(fn)+"\n");
+                    arbol.add(tlf, nom, Conversion.stringToTime(ini), Conversion.stringToTime(fn));
                     arbol.mostrar();
                     System.out.println("Presione alguna tecla para continuar..");
                     sc.next();
@@ -92,8 +97,8 @@ public class Test {
     }
 
     public static void editarContacto(Scanner sc, Arbol arbol){
-        String nom="";
-        int tlf=0, ini=0, fn=0,i=0, op=0;
+        String nom="", tlf="";
+        int ini=0, fn=0, i=0, op=0;
         Nodo[] arr = arbol.toArray();
         System.out.println("\n\t EDITAR CONTACTO\n\n");
         do{
@@ -112,7 +117,7 @@ public class Test {
             System.out.print("Ingrese una opcion: [  ]\b\b\b ");
             op=sc.nextInt();    
         }while(op<0||op>4);
-        
+
         switch(op){
             case 1:{
                 System.out.print("Nombre: ");
@@ -120,25 +125,30 @@ public class Test {
                 nom=sc.nextLine();
                 break;
             }
-            
+
             case 2:{
                 System.out.print("Telefono: ");
-                tlf=sc.nextInt();
+                sc.nextLine();
+                tlf=sc.nextLine();
                 break;
             }
-            
+
             case 3:{
-                System.out.print("\tHora de inicio: ");
-                ini=sc.nextInt();
+                System.out.print("Hora de inicio (HH:MM): ");
+                sc.nextLine();
+                String aux=sc.nextLine();
+                ini = Conversion.stringToTime(aux);
                 break;
             }
-            
+
             case 4:{
-                System.out.print("\tHora de fin: ");
-                fn=sc.nextInt();
-                break;  
+                System.out.print("Hora de fin (HH:MM): ");
+                sc.nextLine();
+                String aux=sc.nextLine();
+                fn = Conversion.stringToTime(aux);
+                break;
             }
-            
+
         }
         arbol.editar(op, arr[i-1].nombre, nom, tlf, ini, fn);
     }

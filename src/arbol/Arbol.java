@@ -19,7 +19,7 @@ public class Arbol implements Serializable {
         return s1.compareTo(s2);
     }
 
-    private Nodo addR(Nodo now, int tel, String nombre, int inicio, int fin){
+    private Nodo addR(Nodo now, String tel, String nombre, int inicio, int fin){
         if(now == null){
             return new Nodo(tel, nombre, inicio, fin);
         }
@@ -33,7 +33,7 @@ public class Arbol implements Serializable {
         return now;
     }
 
-    public void add(int tel, String nombre, int inicio, int fin){
+    public void add(String tel, String nombre, int inicio, int fin){
         raiz = addR(raiz, tel, nombre, inicio, fin);
         cant++;
     }
@@ -101,7 +101,8 @@ public class Arbol implements Serializable {
         if(raiz != null){
             mostrarR(raiz.left, cont);
             cont++;
-            System.out.println(cont + ") " + raiz.nombre + " - " + raiz.tel);
+            System.out.println(cont + ")\t" + raiz.nombre + "\t\t" + raiz.tel + "\t\t"
+                    + Conversion.timeToString(raiz.inicio) + "\t\t" + Conversion.timeToString(raiz.fin));
             mostrarR(raiz.right, cont);
             cont++;
         }
@@ -109,10 +110,11 @@ public class Arbol implements Serializable {
 
     public void mostrar(){
         Nodo rar = this.raiz;
+        System.out.println("#\tnombre\t\ttelefono\t\tinicio\t\tfin\n");
         mostrarR(rar, 0);
     }
 
-    private Nodo editarR(int opc, Nodo now, String nombre, String nuevo, int tel, int inicio, int fin){
+    private Nodo editarR(int opc, Nodo now, String nombre, String nuevo, String tel, int inicio, int fin){
         if(now == null){
             return null;
         }
@@ -131,7 +133,7 @@ public class Arbol implements Serializable {
         return now;
     }
 
-    public void editar(int opc, String nombre, String nuevo, int tel, int inicio, int fin){
+    public void editar(int opc, String nombre, String nuevo, String tel, int inicio, int fin){
         if (opc==1 && !nombre.equals(nuevo)) {
             Nodo temp = buscar(nombre);
             add(temp.tel, nuevo, temp.inicio, temp.fin);
