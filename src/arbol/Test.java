@@ -52,25 +52,31 @@ public class Test {
                     String nom=sc.nextLine();
                     System.out.print("Telefono: ");
                     int tlf=sc.nextInt();
-                    System.out.print("Tiempo disponible: ");
+                    System.out.println("Tiempo disponible: ");
                     System.out.print("\tHora de inicio: ");
                     int ini=sc.nextInt();
                     System.out.print("\tHora de fin: ");
                     int fn=sc.nextInt();
                     arbol.add(tlf, nom, ini, fn);
                     arbol.mostrar();
+                    System.out.println("Presione alguna tecla para continuar..");
+                    sc.next();
                     break;
                 }
                 case 2:{
+                    editarContacto(sc,arbol);
+                    arbol.mostrar();
+                    System.out.println("Presione alguna tecla para continuar..");
+                    sc.next();
+                    break;
+                }
+                case 3:{
                     System.out.print("Nombre: ");
                     sc.nextLine();
                     String nom=sc.nextLine();
                     System.out.println("arbol.buscar(\""+nom+"\").tel = " + arbol.buscar(nom).tel);
-                    break;
-                }
-                case 3:{
-                    editarContacto(sc,arbol);
-                    arbol.mostrar();
+                    System.out.println("Presione alguna tecla para continuar..");
+                    sc.next();
                     break;
                 }
                 case 4:{
@@ -81,11 +87,15 @@ public class Test {
                         System.out.println(" arr["+i+"].nombre = " + arr[i].nombre+" - "+arr[i].fin);
                         //pila.push(arr[i]);
                     }
+                    System.out.println("Presione alguna tecla para continuar..");
+                    sc.next();
                     break;
                 }
                 case 5:{
                     Nodo[] arr = arbol.toArray();
                     MaxContactos.maxContactos(arr);
+                    System.out.println("Presione alguna tecla para continuar..");
+                    sc.next();
                     break;
                 }
             }
