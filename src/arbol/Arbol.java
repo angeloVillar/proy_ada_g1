@@ -170,17 +170,17 @@ public class Arbol implements Serializable {
     }
 
     void guardar() throws IOException {
-        File f = new File("arbol");
+        File f = new File("contactos.txt");
         if(f.exists()){
             f.delete();
         }
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("arbol"));
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("contactos.txt"));
         out.writeObject(raiz);
         out.close();
     }
 
     void cargar() throws ClassNotFoundException, IOException {
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("arbol"));
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("contactos.txt"));
         raiz = (Nodo)in.readObject();
         in.close();
         Nodo r = raiz;

@@ -11,35 +11,6 @@ import horarios.MaxContactos;
 public class Test {
     public static void main(String args[]) throws IOException, ClassNotFoundException {
         Arbol arbol = new Arbol();
-        //arbol.cargar("test");
-        /*
-        arbol.add(98, "ali", 10, 14);
-        arbol.add(928, "cdv12li", 12, 15);
-        arbol.add(91238, "fel355i", 11, 16);
-        arbol.add(9548, "ouili", 17, 20);
-
-        arbol.mostrar();
-        System.out.println("arbol.buscar(\"ouili\").tel = " + arbol.buscar("ouili").tel);
-        arbol.editar(2, "ali", "", 999, 0, 0);
-        arbol.editar(1, "ouili", "fred", 9969, 0, 0);
-
-        arbol.mostrar();
-        System.out.println(" = ");
-        Nodo[] arr = arbol.toArray();
-        for(int i=0; i<arbol.getCant(); i++){
-            System.out.println("arr[i].nombre = " + arr[i].nombre+" - "+arr[i].fin);
-        }
-        QuickSort.quickSort(arr);
-        //Pila pila = new Pila();
-        for(int i=0; i<arbol.getCant(); i++){
-            System.out.println(" arr[i].nombre = " + arr[i].nombre+" - "+arr[i].fin);
-            //pila.push(arr[i]);
-        }
-        System.out.println(" ===== ");
-        MaxContactos.maxContactos(arr);
-        //pila.print();
-        //arbol.guardar();
-         */
         int opc;
         Scanner sc = new Scanner(System.in);
         do{
@@ -92,6 +63,14 @@ public class Test {
                     sc.next();
                     break;
                 }
+                case 6:{
+                    arbol.guardar();
+                    break;
+                }
+                case 7:{
+                    arbol.cargar();
+                    break;
+                }
             }
         }while(opc!=0);
     }
@@ -105,6 +84,8 @@ public class Test {
         System.out.println("3.- Buscar telefono por nombre");
         System.out.println("4.- Ordenar contactos alfabeticamente");
         System.out.println("5.- Organizar visitas individuales segun tiempo disponible");
+        System.out.println("6.- Exportar contactos");
+        System.out.println("7.- Importar contactos");
         System.out.println("0.- Salir");
         
         System.out.print("Ingrese una opcion: [  ]\b\b\b ");
