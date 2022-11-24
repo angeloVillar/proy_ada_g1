@@ -118,9 +118,9 @@ public class Arbol implements Serializable {
         }
         if(comparar(nombre, now.nombre) == 0){
             switch (opc) {
-                case 2: now.tel = tel;
-                case 3: now.inicio = inicio;
-                case 4: now.fin = fin;
+                case 2 -> now.tel = tel;
+                case 3 -> now.inicio = inicio;
+                case 4 -> now.fin = fin;
             }
             return now;
         }

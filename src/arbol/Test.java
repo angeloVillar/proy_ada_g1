@@ -80,13 +80,7 @@ public class Test {
                     break;
                 }
                 case 4:{
-                    Nodo[] arr = arbol.toArray();
-                    QuickSort.quickSort(arr);
-                    //Pila pila = new Pila();
-                    for(int i=0; i<arbol.getCant(); i++){
-                        System.out.println(" arr["+i+"].nombre = " + arr[i].nombre+" - "+arr[i].fin);
-                        //pila.push(arr[i]);
-                    }
+                    arbol.mostrar();
                     System.out.println("Presione alguna tecla para continuar..");
                     sc.next();
                     break;
@@ -109,8 +103,8 @@ public class Test {
         System.out.println("1.- Agregar contacto");
         System.out.println("2.- Editar contacto");
         System.out.println("3.- Buscar telefono por nombre");
-        System.out.println("4.- Ordenar lista de contactos");
-        System.out.println("5.- Obtener maximo de tiempo");
+        System.out.println("4.- Ordenar contactos alfabeticamente");
+        System.out.println("5.- Organizar visitas individuales segun tiempo disponible");
         System.out.println("0.- Salir");
         
         System.out.print("Ingrese una opcion: [  ]\b\b\b ");
