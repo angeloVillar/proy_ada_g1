@@ -5,6 +5,7 @@ import arbol.Pila;
 import ordenamiento.QuickSort;
 
 import java.util.Arrays;
+import javax.swing.*;
 
 public class MaxContactos {
 
@@ -38,7 +39,7 @@ public class MaxContactos {
 
     }
 
-    public static void maxContactos(Nodo[] arr){
+    public static void maxContactos(Nodo[] arr, JTextPane console){
         QuickSort.quickSort(arr);
         int n = arr.length;
 
@@ -69,8 +70,9 @@ public class MaxContactos {
             //tabla[i] = Math.max(tiempo, tabla[i-1]);
 
         }
-        System.out.println("Maximo tiempo = "+dp[n-1].tiempo);
-        dp[n-1].aux.print();
+        //System.out.println("Maximo tiempo = "+dp[n-1].tiempo);
+        console.setText(console.getText() + "\nMaximo tiempo = "+dp[n-1].tiempo);
+        dp[n-1].aux.print(console);
 
     }
 

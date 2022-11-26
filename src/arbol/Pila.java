@@ -1,4 +1,5 @@
 package arbol;
+import javax.swing.*;
 
 public class Pila {
     private Nodo top;
@@ -38,10 +39,11 @@ public class Pila {
         top = (top).right;
     }
 
-    public void print(){
+    public void print(JTextPane console){
         Nodo temp = top;
         while(temp != null){
-            System.out.println(temp.nombre);
+            //System.out.println(temp.nombre);
+            console.setText(console.getText() + "\n" + temp.nombre);
             temp = temp.right;
         }
     }

@@ -1,6 +1,7 @@
 package arbol;
 
 import java.io.*;
+import javax.swing.*;
 
 public class Arbol implements Serializable {
     private Nodo raiz;
@@ -97,21 +98,23 @@ public class Arbol implements Serializable {
         }
     }
 
-    private void mostrarR(Nodo raiz, int cont){
-        if(raiz != null){
-            mostrarR(raiz.left, cont);
-            cont++;
-            System.out.println(cont + ")\t" + raiz.nombre + "\t\t" + raiz.tel + "\t\t"
-                    + Conversion.timeToString(raiz.inicio) + "\t\t" + Conversion.timeToString(raiz.fin));
-            mostrarR(raiz.right, cont);
-            cont++;
+    private int mostrarR(Nodo raiz, int cont, JTextPane instruccion){
+        if(raiz.left != null){
+            cont = mostrarR(raiz.left, cont, instruccion);
         }
+        if(raiz.right != null){
+            cont = mostrarR(raiz.right, cont, instruccion);
+        }
+        instruccion.setText( instruccion.getText() + cont + ") " + raiz.nombre + "\t   " + raiz.tel + "\t\t"
+                + Conversion.timeToString(raiz.inicio) + "\t" + Conversion.timeToString(raiz.fin) + "\n" );
+        return cont+1;
     }
 
-    public void mostrar(){
+    public void mostrar(JTextPane instruccion){
         Nodo rar = this.raiz;
-        System.out.println("#\tnombre\t\ttelefono\t\tinicio\t\tfin\n");
-        mostrarR(rar, 0);
+        //System.out.println("#\tnombre\t\ttelefono\t\tinicio\t\tfin\n");
+        instruccion.setText("");
+        mostrarR(rar, 1, instruccion);
     }
 
     private Nodo editarR(int opc, Nodo now, String nombre, String nuevo, String tel, int inicio, int fin){
@@ -145,21 +148,22 @@ public class Arbol implements Serializable {
         raiz = editarR(opc, raiz, nombre, nuevo, tel, inicio, fin);
     }
 
-    private Nodo[] toArrayR(Nodo raiz, int cont, Nodo[] arr){
-        if(raiz != null){
-            toArrayR(raiz.left, cont, arr);
-            cont++;
-            arr[cont] = raiz;
-            toArrayR(raiz.right, cont, arr);
-            cont++;
+    private static int toArrayR(Nodo raiz, int cont, Nodo[] arr){
+        if(raiz.left != null){
+            cont = toArrayR(raiz.left, cont, arr);
         }
-        return arr;
+        if(raiz.right != null){
+            cont = toArrayR(raiz.right, cont, arr);
+        }
+        arr[cont] = raiz;
+        return cont+1;
     }
 
     public Nodo[] toArray(){
         Nodo rar = this.raiz;
         Nodo[] arr = new Nodo[cant];
-        return toArrayR(rar, -1, arr);
+        toArrayR(rar, 0, arr);
+        return arr;
     }
 
     private int setCant(Nodo raiz, int cont){
@@ -171,7 +175,7 @@ public class Arbol implements Serializable {
         return cont;
     }
 
-    void guardar() throws IOException {
+    public void guardar() throws IOException {
         File f = new File("contactos.txt");
         if(f.exists()){
             f.delete();
@@ -181,7 +185,7 @@ public class Arbol implements Serializable {
         out.close();
     }
 
-    void cargar() throws ClassNotFoundException, IOException {
+    public void cargar() throws ClassNotFoundException, IOException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream("contactos.txt"));
         raiz = (Nodo)in.readObject();
         in.close();
