@@ -28,6 +28,7 @@ public class App extends JFrame implements ActionListener{
         setLocation(650, 200);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        pack();
         setVisible(true);
         instruccion.setText(menu());
         ejecutarButton.addActionListener(this);
@@ -44,9 +45,6 @@ public class App extends JFrame implements ActionListener{
     public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException, CloneNotSupportedException {
         App myApp = new App();
         Arbol arbol = new Arbol();
-
-
-
 
 
 
