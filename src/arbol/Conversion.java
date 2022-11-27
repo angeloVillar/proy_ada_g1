@@ -8,11 +8,7 @@ public class Conversion {
         int hour        =   Integer.parseInt(strArr[0]);
         int min         =   Integer.parseInt(strArr[1]);
 
-        if(hour < 8){
-            timeInMins  =   ((12+hour) * 60) + min ;
-        } else {
-            timeInMins  =   (hour * 60) + min;
-        }
+        timeInMins = hour*60 + min;
 
         return timeInMins;
     }
@@ -27,6 +23,9 @@ public class Conversion {
             time = hour + ":0" + min;
         } else {
             time = hour + ":" + min;
+        }
+        if(hour < 10){
+            time = "0" + time;
         }
         return time;
     }

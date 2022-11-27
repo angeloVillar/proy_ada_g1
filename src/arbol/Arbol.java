@@ -106,7 +106,7 @@ public class Arbol implements Serializable {
             cont = mostrarR(raiz.right, cont, instruccion);
         }
         instruccion.setText( instruccion.getText() + cont + ") " + raiz.nombre + "\t   " + raiz.tel + "\t\t"
-                + Conversion.timeToString(raiz.inicio) + "\t" + Conversion.timeToString(raiz.fin) + "\n" );
+                + Conversion.timeToString(raiz.inicio) + "  -  " + Conversion.timeToString(raiz.fin) + "\n" );
         return cont+1;
     }
 

@@ -41,10 +41,9 @@ public class App extends JFrame implements ActionListener{
         });
     }
 
-    public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException {
+    public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException, CloneNotSupportedException {
         App myApp = new App();
         Arbol arbol = new Arbol();
-        //sema.acquire();
 
 
 
