@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -30,6 +32,9 @@ public class App extends JFrame implements ActionListener{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
+        SimpleAttributeSet attributeSet = new SimpleAttributeSet();
+        StyleConstants.setBold(attributeSet, true);
+        instruccion.setCharacterAttributes(attributeSet, true);
         instruccion.setText(menu());
         ejecutarButton.addActionListener(this);
         volverButton.addActionListener(new ActionListener() {
@@ -43,11 +48,12 @@ public class App extends JFrame implements ActionListener{
     }
 
     public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException, CloneNotSupportedException {
+/*        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch(Exception ignored){}*/
+
         App myApp = new App();
         Arbol arbol = new Arbol();
-
-
-
 
 
         int opc;
@@ -84,9 +90,6 @@ public class App extends JFrame implements ActionListener{
                     break;
                 }
                 case 2:{
-
-
-
 
 
 
@@ -159,12 +162,6 @@ public class App extends JFrame implements ActionListener{
 
 
 
-
-
-
-
-
-
                     arbol.mostrar(myApp.mostrado);
                     myApp.instruccion.setText(myApp.instruccion.getText()+"\nPresione 'Ejecutar' para continuar..");
                     sema.acquire();
@@ -210,14 +207,7 @@ public class App extends JFrame implements ActionListener{
         }while(opc!=0);
 
 
-
-
-
-
     }
-
-
-
 
 
 

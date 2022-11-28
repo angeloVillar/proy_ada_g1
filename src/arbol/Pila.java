@@ -63,14 +63,6 @@ public class Pila implements Cloneable{
         return null;
     }
 
-    public void print2(){
-        Nodo temp = top;
-        while(temp != null){
-            System.out.println(temp.nombre);
-            temp = temp.right;
-        }
-    }
-
     public Pila clone() throws CloneNotSupportedException {
         return (Pila) super.clone();
         /*Pila clone = (Pila) super.clone();

@@ -56,22 +56,12 @@
               <text value="Volver"/>
             </properties>
           </component>
-          <component id="897e8" class="javax.swing.JTextPane" binding="instruccion">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="4" hsize-policy="4" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <minimum-size width="265" height="170"/>
-                <preferred-size width="265" height="170"/>
-                <maximum-size width="365" height="170"/>
-              </grid>
-            </constraints>
-            <properties>
-              <editable value="false"/>
-            </properties>
-          </component>
           <component id="438b5" class="javax.swing.JTextField" binding="listaDeContactosTextField" default-binding="true">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="9" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
+                <minimum-size width="-1" height="15"/>
+                <preferred-size width="150" height="15"/>
+                <maximum-size width="-1" height="15"/>
               </grid>
             </constraints>
             <properties>
@@ -81,10 +71,10 @@
           </component>
           <scrollpane id="48e9d">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="4" hsize-policy="4" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <minimum-size width="-1" height="120"/>
-                <preferred-size width="-1" height="120"/>
-                <maximum-size width="-1" height="120"/>
+              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="4" hsize-policy="4" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="-1" height="130"/>
+                <preferred-size width="-1" height="130"/>
+                <maximum-size width="-1" height="130"/>
               </grid>
             </constraints>
             <properties/>
@@ -95,6 +85,25 @@
                 <properties>
                   <background color="-1541"/>
                   <caretColor color="-15000805"/>
+                  <editable value="false"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+          <scrollpane id="d4678">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="4" hsize-policy="4" anchor="1" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="-1" height="170"/>
+                <preferred-size width="-1" height="170"/>
+                <maximum-size width="-1" height="170"/>
+              </grid>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="897e8" class="javax.swing.JTextPane" binding="instruccion">
+                <constraints/>
+                <properties>
                   <editable value="false"/>
                 </properties>
               </component>
