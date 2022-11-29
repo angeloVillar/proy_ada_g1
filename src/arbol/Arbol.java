@@ -175,22 +175,44 @@ public class Arbol implements Serializable {
         return cont;
     }
 
-    public void guardar() throws IOException {
+    public void guardar() throws IOException, ClassNotFoundException {
+        Nodo temp = raiz;
+        cargar(1);
         File f = new File("contactos.txt");
-        if(f.exists()){
-            f.delete();
-        }
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("contactos.txt"));
         out.writeObject(raiz);
         out.close();
+        raiz = temp;
+        JOptionPane.showConfirmDialog(null, "Los contactos fueron exportados",
+                "Contactos", JOptionPane.DEFAULT_OPTION);
     }
 
-    public void cargar() throws ClassNotFoundException, IOException {
+    public void cargar(int op) throws ClassNotFoundException, IOException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream("contactos.txt"));
+        Nodo temp = raiz;
         raiz = (Nodo)in.readObject();
+        if(temp != null){
+            cargarR(temp);
+        }
         in.close();
         Nodo r = raiz;
         cant = setCant(r, 0);
+        if(op == 0){
+            JOptionPane.showConfirmDialog(null, "Los contactos fueron importados",
+                    "Contactos", JOptionPane.DEFAULT_OPTION);
+        }
+    }
+
+    private void cargarR(Nodo temp){
+        if(temp.left != null){
+            add(temp.tel, temp.nombre, temp.inicio, temp.fin);
+            cargarR(temp.left);
+        }
+        if(temp.right != null){
+            add(temp.tel, temp.nombre, temp.inicio, temp.fin);
+            cargarR(temp.right);
+        }
+        add(temp.tel, temp.nombre, temp.inicio, temp.fin);
     }
 
 }

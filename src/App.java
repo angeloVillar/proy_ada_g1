@@ -200,7 +200,7 @@ public class App extends JFrame implements ActionListener{
                     break;
                 }
                 case 7:{
-                    arbol.cargar();
+                    arbol.cargar(0);
                     break;
                 }
             }
