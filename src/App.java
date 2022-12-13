@@ -257,6 +257,7 @@ public class App extends JFrame implements ActionListener{
                                         break;
                                     }
                                 } while (!myApp.box.equals("/back"));
+                                myApp.box="";
                                 break;
                             }
                             case 3:{
