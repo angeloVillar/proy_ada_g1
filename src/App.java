@@ -8,6 +8,7 @@ import java.util.concurrent.Semaphore;
 
 import arbol.*;
 import horarios.*;
+import grafo.*;
 
 public class App extends JFrame implements ActionListener{
     private JPanel panel1;
@@ -54,6 +55,7 @@ public class App extends JFrame implements ActionListener{
 
         App myApp = new App();
         Arbol arbol = new Arbol();
+        Grafo grafo = null;
 
 
         int opc;
@@ -203,6 +205,75 @@ public class App extends JFrame implements ActionListener{
                     arbol.cargar(0);
                     break;
                 }
+                case 8:{
+
+
+                    do {
+                        int op = 0;
+                        do{
+                            myApp.instruccion.setText("""
+                                Menu de mapeo de citas:
+                                1.- Crear nuevo grafo
+                                2.- Insertar nueva ruta entre dos elementos
+                                3.- Hallar ruta mas corta entre elementos
+                                4.- Guardar grafo
+                                5.- Cargar grafo
+                                Ingrese una opcion:
+                                """);
+                            sema.acquire();
+                            if(myApp.box == "/back"){continue volver;}
+                            op=Integer.parseInt(myApp.box);
+                        }while(op<0||op>4);
+
+                        switch(op){
+                            case 1:{
+                                int ca, or;
+                                myApp.instruccion.setText("Ingrese cantidad de elementos del grafo:");
+                                sema.acquire();
+                                if(myApp.box == "/back"){continue;}
+                                ca = Integer.parseInt(myApp.box);
+                                myApp.instruccion.setText("Ingrese elemento de origen\nNumero del 0 al "+Integer.toString(ca-1));
+                                sema.acquire();
+                                if(myApp.box == "/back"){continue;}
+                                or = Integer.parseInt(myApp.box);
+                                grafo = new Grafo(ca, or);
+                                break;
+                            }
+                            case 2:{
+                                int cont = 0;
+                                do {
+                                    if(grafo != null){
+                                        myApp.instruccion.setText("Ingrese elemento en el siguiente formato:\n" +
+                                                "'vertice origen','vertice','distancia'\n" +
+                                                "Ejemplo: 0,1,4");
+                                        myApp.instruccion.setText(myApp.instruccion.getText()+"\nActualmente: "+cont);
+                                        sema.acquire();
+                                        if(myApp.box == "/back"){continue;}
+                                        String[] t = myApp.box.split(",");
+                                        grafo.insert(Integer.parseInt(t[0]), Integer.parseInt(t[1]), Integer.parseInt(t[2]));
+                                        cont++;
+                                    } else {
+                                        myApp.instruccion.setText("El grafo debe ser creado antes de usar esta opcion");
+                                        break;
+                                    }
+                                } while (myApp.box != "/back");
+                                break;
+                            }
+                            case 3:{
+                                if(grafo != null){
+                                    grafo.caminoMasCorto();
+                                } else {
+                                    myApp.instruccion.setText("El grafo debe ser creado antes de usar esta opcion");
+                                }
+                                break;
+                            }
+
+                        }
+                    } while (myApp.box != "/back");
+
+
+                    break;
+                }
             }
         }while(opc!=0);
 
@@ -222,6 +293,7 @@ public class App extends JFrame implements ActionListener{
                 5.- Organizar visitas individuales segun tiempo disponible
                 6.- Exportar contactos
                 7.- Importar contactos
+                8.- Menu de citas
                 """;
     }
 

@@ -28,4 +28,15 @@ public class Grafo {
         }
     }
 
+    public int getCant() {
+        return cant;
+    }
+
+    public int getOrigen() {
+        return origen;
+    }
+
+    public ArrayList<Lista> getGrafo() {
+        return grafo;
+    }
 }
