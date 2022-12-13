@@ -1,6 +1,8 @@
 package grafo;
 
-public class NodoDJ {
+import java.io.Serializable;
+
+public class NodoDJ implements Serializable {
     private int vertice, distancia;
     private NodoDJ next;
     public NodoDJ(int v, int d){

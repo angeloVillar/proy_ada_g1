@@ -1,6 +1,8 @@
 package grafo;
 
-public class Lista implements Cloneable{
+import java.io.Serializable;
+
+public class Lista implements Cloneable, Serializable {
     private NodoDJ base;
     private int cont;
 

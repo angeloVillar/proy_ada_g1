@@ -1,8 +1,10 @@
 package grafo;
 
+import javax.swing.*;
+import java.io.*;
 import java.util.ArrayList;
 
-public class Grafo {
+public class Grafo implements Serializable{
     int cant;
     ArrayList<Lista> grafo;
     int origen;
@@ -20,11 +22,13 @@ public class Grafo {
         grafo.get(org).addFinal(v, d);
     }
 
-    public void caminoMasCorto() throws CloneNotSupportedException {
+    public void caminoMasCorto(JTextPane console) throws CloneNotSupportedException {
         int[] dist = Dijkstra.dijkstra(cant, grafo, origen);
         System.out.println("Vertice\tDistancia desde origen");
+        console.setText("Vertice\tDistancia desde origen");
         for(int i=0; i<cant; i++){
             System.out.println(i + "\t" + dist[i]);
+            console.setText(console.getText() + "\n" + i + "\t\t" + dist[i]);
         }
     }
 
@@ -39,4 +43,26 @@ public class Grafo {
     public ArrayList<Lista> getGrafo() {
         return grafo;
     }
+
+    private static final long SerialVersionUID = 10L;
+
+    public static void guardar(Grafo g) throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("grafo.txt"));
+        out.writeObject(g);
+        out.close();
+        java.awt.Toolkit.getDefaultToolkit().beep();
+        JOptionPane.showConfirmDialog(null, "El grafo fue exportado",
+                "Contactos", JOptionPane.DEFAULT_OPTION);
+    }
+
+    public static Grafo cargar() throws IOException, ClassNotFoundException {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("grafo.txt"));
+        Grafo g = (Grafo)in.readObject();
+        in.close();
+        java.awt.Toolkit.getDefaultToolkit().beep();
+        JOptionPane.showConfirmDialog(null, "El grafo fue importado",
+                "Contactos", JOptionPane.DEFAULT_OPTION);
+        return g;
+    }
+
 }

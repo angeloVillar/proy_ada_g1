@@ -68,27 +68,27 @@ public class App extends JFrame implements ActionListener{
                 case 1:{
                     myApp.instruccion.setText("Nombre: ");
                     sema.acquire();
-                    if(myApp.box == "/back"){break;}
+                    if(myApp.box.equals("/back")){break;}
                     String nom=myApp.box;
                     myApp.instruccion.setText("Telefono: ");
                     sema.acquire();
-                    if(myApp.box == "/back"){break;}
+                    if(myApp.box.equals("/back")){break;}
                     String tlf=myApp.box;
                     myApp.instruccion.setText("Tiempo disponible: ");
                     myApp.instruccion.setText(myApp.instruccion.getText()+"\nHora de inicio (HH:MM): ");
                     sema.acquire();
-                    if(myApp.box == "/back"){break;}
+                    if(myApp.box.equals("/back")){break;}
                     String ini=myApp.box;
                     myApp.instruccion.setText("Tiempo disponible: ");
                     myApp.instruccion.setText(myApp.instruccion.getText()+"\nHora de fin (HH:MM): ");
                     sema.acquire();
-                    if(myApp.box == "/back"){break;}
+                    if(myApp.box.equals("/back")){break;}
                     String fn=myApp.box;
                     arbol.add(tlf, nom, Conversion.stringToTime(ini), Conversion.stringToTime(fn));
                     arbol.mostrar(myApp.mostrado);
                     myApp.instruccion.setText("Presione 'Ejecutar' para continuar..");
                     sema.acquire();
-                    if(myApp.box == "/back"){break;}
+                    if(myApp.box.equals("/back")){break;}
                     break;
                 }
                 case 2:{
@@ -104,7 +104,7 @@ public class App extends JFrame implements ActionListener{
                         arbol.mostrar(myApp.mostrado);
                         //console.setText(console.getText()+"Ingrese una opcion (indice):");
                         sema.acquire();
-                        if(myApp.box == "/back"){continue volver;}
+                        if(myApp.box.equals("/back")){continue volver;}
                         //i = Integer.parseInt(myApp.box);
                         nombre = myApp.box;
                     }while(i<0||i>arbol.getCant());
@@ -119,7 +119,7 @@ public class App extends JFrame implements ActionListener{
                             Ingrese una opcion:
                             """);
                         sema.acquire();
-                        if(myApp.box == "/back"){continue volver;}
+                        if(myApp.box.equals("/back")){continue volver;}
                         op=Integer.parseInt(myApp.box);
                     }while(op<0||op>4);
 
@@ -127,7 +127,7 @@ public class App extends JFrame implements ActionListener{
                         case 1:{
                             myApp.instruccion.setText("Nombre: ");
                             sema.acquire();
-                            if(myApp.box == "/back"){continue volver;}
+                            if(myApp.box.equals("/back")){continue volver;}
                             nom=myApp.box;
                             break;
                         }
@@ -135,7 +135,7 @@ public class App extends JFrame implements ActionListener{
                         case 2:{
                             myApp.instruccion.setText("Telefono: ");
                             sema.acquire();
-                            if(myApp.box == "/back"){continue volver;}
+                            if(myApp.box.equals("/back")){continue volver;}
                             tlf=myApp.box;
                             break;
                         }
@@ -143,7 +143,7 @@ public class App extends JFrame implements ActionListener{
                         case 3:{
                             myApp.instruccion.setText("Hora de inicio (HH:MM): ");
                             sema.acquire();
-                            if(myApp.box == "/back"){continue volver;}
+                            if(myApp.box.equals("/back")){continue volver;}
                             String aux=myApp.box;
                             ini = Conversion.stringToTime(aux);
                             break;
@@ -152,7 +152,7 @@ public class App extends JFrame implements ActionListener{
                         case 4:{
                             myApp.instruccion.setText("Hora de fin (HH:MM): ");
                             sema.acquire();
-                            if(myApp.box == "/back"){continue volver;}
+                            if(myApp.box.equals("/back")){continue volver;}
                             String aux=myApp.box;
                             fn = Conversion.stringToTime(aux);
                             break;
@@ -167,25 +167,25 @@ public class App extends JFrame implements ActionListener{
                     arbol.mostrar(myApp.mostrado);
                     myApp.instruccion.setText(myApp.instruccion.getText()+"\nPresione 'Ejecutar' para continuar..");
                     sema.acquire();
-                    if(myApp.box == "/back"){break;}
+                    if(myApp.box.equals("/back")){break;}
                     break;
                 }
                 case 3:{
                     myApp.instruccion.setText("Nombre: ");
                     sema.acquire();
-                    if(myApp.box == "/back"){break;}
+                    if(myApp.box.equals("/back")){break;}
                     String nom=myApp.box;
                     myApp.instruccion.setText("arbol.buscar(\""+nom+"\").tel = " + arbol.buscar(nom).getTel());
                     myApp.instruccion.setText(myApp.instruccion.getText()+"\nPresione 'Ejecutar' para continuar..");
                     sema.acquire();
-                    if(myApp.box == "/back"){break;}
+                    if(myApp.box.equals("/back")){break;}
                     break;
                 }
                 case 4:{
                     arbol.mostrar(myApp.mostrado);
                     myApp.instruccion.setText("Presione 'Ejecutar' para continuar..");
                     sema.acquire();
-                    if(myApp.box == "/back"){break;}
+                    if(myApp.box.equals("/back")){break;}
                     break;
                 }
                 case 5:{
@@ -194,7 +194,7 @@ public class App extends JFrame implements ActionListener{
                     MaxContactos.maxContactos(arr, myApp.instruccion);
                     myApp.instruccion.setText(myApp.instruccion.getText()+"\nPresione 'Ejecutar' para continuar..");
                     sema.acquire();
-                    if(myApp.box == "/back"){break;}
+                    if(myApp.box.equals("/back")){break;}
                     break;
                 }
                 case 6:{
@@ -221,20 +221,20 @@ public class App extends JFrame implements ActionListener{
                                 Ingrese una opcion:
                                 """);
                             sema.acquire();
-                            if(myApp.box == "/back"){continue volver;}
+                            if(myApp.box.equals("/back")){continue volver;}
                             op=Integer.parseInt(myApp.box);
-                        }while(op<0||op>4);
+                        }while(op<0||op>5);
 
                         switch(op){
                             case 1:{
                                 int ca, or;
                                 myApp.instruccion.setText("Ingrese cantidad de elementos del grafo:");
                                 sema.acquire();
-                                if(myApp.box == "/back"){continue;}
+                                if(myApp.box.equals("/back")){continue;}
                                 ca = Integer.parseInt(myApp.box);
                                 myApp.instruccion.setText("Ingrese elemento de origen\nNumero del 0 al "+Integer.toString(ca-1));
                                 sema.acquire();
-                                if(myApp.box == "/back"){continue;}
+                                if(myApp.box.equals("/back")){continue;}
                                 or = Integer.parseInt(myApp.box);
                                 grafo = new Grafo(ca, or);
                                 break;
@@ -248,7 +248,7 @@ public class App extends JFrame implements ActionListener{
                                                 "Ejemplo: 0,1,4");
                                         myApp.instruccion.setText(myApp.instruccion.getText()+"\nActualmente: "+cont);
                                         sema.acquire();
-                                        if(myApp.box == "/back"){continue;}
+                                        if(myApp.box.equals("/back")){break;}
                                         String[] t = myApp.box.split(",");
                                         grafo.insert(Integer.parseInt(t[0]), Integer.parseInt(t[1]), Integer.parseInt(t[2]));
                                         cont++;
@@ -256,20 +256,28 @@ public class App extends JFrame implements ActionListener{
                                         myApp.instruccion.setText("El grafo debe ser creado antes de usar esta opcion");
                                         break;
                                     }
-                                } while (myApp.box != "/back");
+                                } while (!myApp.box.equals("/back"));
                                 break;
                             }
                             case 3:{
                                 if(grafo != null){
-                                    grafo.caminoMasCorto();
+                                    grafo.caminoMasCorto(myApp.mostrado);
                                 } else {
                                     myApp.instruccion.setText("El grafo debe ser creado antes de usar esta opcion");
                                 }
                                 break;
                             }
+                            case 4:{
+                                Grafo.guardar(grafo);
+                                break;
+                            }
+                            case 5:{
+                                grafo = Grafo.cargar();
+                                break;
+                            }
 
                         }
-                    } while (myApp.box != "/back");
+                    } while (!myApp.box.equals("/back"));
 
 
                     break;
