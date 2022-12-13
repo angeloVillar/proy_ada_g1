@@ -183,6 +183,7 @@ public class Arbol implements Serializable {
         out.writeObject(raiz);
         out.close();
         raiz = temp;
+        java.awt.Toolkit.getDefaultToolkit().beep();
         JOptionPane.showConfirmDialog(null, "Los contactos fueron exportados",
                 "Contactos", JOptionPane.DEFAULT_OPTION);
     }
@@ -198,6 +199,7 @@ public class Arbol implements Serializable {
         Nodo r = raiz;
         cant = setCant(r, 0);
         if(op == 0){
+            java.awt.Toolkit.getDefaultToolkit().beep();
             JOptionPane.showConfirmDialog(null, "Los contactos fueron importados",
                     "Contactos", JOptionPane.DEFAULT_OPTION);
         }
@@ -205,11 +207,9 @@ public class Arbol implements Serializable {
 
     private void cargarR(Nodo temp){
         if(temp.left != null){
-            add(temp.tel, temp.nombre, temp.inicio, temp.fin);
             cargarR(temp.left);
         }
         if(temp.right != null){
-            add(temp.tel, temp.nombre, temp.inicio, temp.fin);
             cargarR(temp.right);
         }
         add(temp.tel, temp.nombre, temp.inicio, temp.fin);
