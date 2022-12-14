@@ -215,16 +215,19 @@ public class App extends JFrame implements ActionListener{
                             myApp.instruccion.setText("""
                                 Menu de mapeo de citas:
                                 1.- Crear nuevo grafo
-                                2.- Insertar nueva ruta entre dos elementos
-                                3.- Hallar ruta mas corta entre elementos
-                                4.- Guardar grafo
-                                5.- Cargar grafo
+                                2.- Ingresar contactos involucrados
+                                3.- Insertar nuevo camino entre dos elementos (nombres)
+                                4.- Insertar nuevo camino entre dos elementos (indices)
+                                5.- Hallar ruta mas corta desde el origen (nombres)
+                                6.- Hallar ruta mas corta desde el origen (indices)
+                                7.- Guardar grafo
+                                8.- Cargar grafo
                                 Ingrese una opcion:
                                 """);
                             sema.acquire();
                             if(myApp.box.equals("/back")){continue volver;}
                             op=Integer.parseInt(myApp.box);
-                        }while(op<0||op>5);
+                        }while(op<0||op>8);
 
                         switch(op){
                             case 1:{
@@ -241,6 +244,58 @@ public class App extends JFrame implements ActionListener{
                                 break;
                             }
                             case 2:{
+                                int cont = 0;
+                                if (grafo != null) {
+                                    for(int i=0; i<grafo.getCant(); i++){
+                                        myApp.instruccion.setText("Ingrese un contacto");
+                                        myApp.instruccion.setText(myApp.instruccion.getText()+"\nActualmente: "+cont);
+                                        sema.acquire();
+                                        if(myApp.box.equals("/back")){break;}
+                                        String t = myApp.box;
+                                        if(arbol.buscar(t)==null){
+                                            myApp.instruccion.setText("No se encontro ese contacto");
+                                            sema.acquire();
+                                            if(myApp.box.equals("/back")){break;}
+                                            cont--;
+                                        } else {
+                                            grafo.nombrar(t);
+                                        }
+                                        cont++;
+                                    }
+                                } else {
+                                    myApp.instruccion.setText("El grafo debe ser creado antes de usar esta opcion");
+                                    break;
+                                }
+                                break;
+                            }
+                            case 3:{
+                                int cont = 0;
+                                do {
+                                    if(grafo != null){
+                                        myApp.instruccion.setText("Ingrese elemento en el siguiente formato:\n" +
+                                                "'contacto origen','contacto destino','distancia en km'\n" +
+                                                "Ejemplo: alfred,beto,30");
+                                        myApp.instruccion.setText(myApp.instruccion.getText()+"\nActualmente: "+cont);
+                                        sema.acquire();
+                                        if(myApp.box.equals("/back")){break;}
+                                        String[] t = myApp.box.split(",");
+                                        if(arbol.buscar(t[0])!=null && arbol.buscar(t[1])!=null){
+                                            int c1 = grafo.traducirIN(t[0]);
+                                            int c2 = grafo.traducirIN(t[1]);
+                                            grafo.insert(c1, c2, Integer.parseInt(t[2]));
+                                            cont++;
+                                        } else {
+                                            myApp.instruccion.setText("uno de los contactos no fue encontrado");
+                                        }
+                                    } else {
+                                        myApp.instruccion.setText("El grafo debe ser creado antes de usar esta opcion");
+                                        break;
+                                    }
+                                } while (!myApp.box.equals("/back"));
+                                myApp.box="";
+                                break;
+                            }
+                            case 4:{
                                 int cont = 0;
                                 do {
                                     if(grafo != null){
@@ -261,7 +316,15 @@ public class App extends JFrame implements ActionListener{
                                 myApp.box="";
                                 break;
                             }
-                            case 3:{
+                            case 5:{
+                                if(grafo != null){
+                                    grafo.caminoMasCortoNombres(myApp.mostrado);
+                                } else {
+                                    myApp.instruccion.setText("El grafo debe ser creado antes de usar esta opcion");
+                                }
+                                break;
+                            }
+                            case 6:{
                                 if(grafo != null){
                                     grafo.caminoMasCorto(myApp.mostrado);
                                 } else {
@@ -269,11 +332,11 @@ public class App extends JFrame implements ActionListener{
                                 }
                                 break;
                             }
-                            case 4:{
+                            case 7:{
                                 Grafo.guardar(grafo);
                                 break;
                             }
-                            case 5:{
+                            case 8:{
                                 grafo = Grafo.cargar();
                                 break;
                             }
