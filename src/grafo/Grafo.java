@@ -6,9 +6,12 @@ import java.util.ArrayList;
 
 public class Grafo implements Serializable{
     int cant;
+
+    //La matriz de adjacencia sera una lista de listas
     ArrayList<Lista> grafo;
     int origen;
 
+    //Constructor
     public Grafo(int cantidad, int org){
         cant = cantidad;
         grafo  = new ArrayList<>();
@@ -18,10 +21,12 @@ public class Grafo implements Serializable{
         origen = org;
     }
 
+    //Insertar una nueva relacion entre nodos
     public void insert(int org, int v, int d){
         grafo.get(org).addFinal(v, d);
     }
 
+    //Metodo que accede al algoritmo de dijkstra e imprime el resultado
     public void caminoMasCorto(JTextPane console) throws CloneNotSupportedException {
         int[] dist = Dijkstra.dijkstra(cant, grafo, origen);
         System.out.println("Vertice\tDistancia desde origen");
@@ -46,6 +51,7 @@ public class Grafo implements Serializable{
 
     private static final long SerialVersionUID = 10L;
 
+    //Metodo que serializa el objeto en un archivo de texto
     public static void guardar(Grafo g) throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("grafo.txt"));
         out.writeObject(g);
@@ -55,6 +61,7 @@ public class Grafo implements Serializable{
                 "Contactos", JOptionPane.DEFAULT_OPTION);
     }
 
+    //Metodo que deserializa el objeto encontrado en el archivo de texto
     public static Grafo cargar() throws IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream("grafo.txt"));
         Grafo g = (Grafo)in.readObject();

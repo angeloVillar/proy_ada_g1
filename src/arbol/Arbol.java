@@ -4,9 +4,10 @@ import java.io.*;
 import javax.swing.*;
 
 public class Arbol implements Serializable {
-    private Nodo raiz;
-    private int cant;
+    private Nodo raiz; //La estructura se guardara a partir de este nodo
+    private int cant; //Contador
 
+    //Constructor
     public Arbol(){
         raiz = null;
         cant = 0;
@@ -20,9 +21,12 @@ public class Arbol implements Serializable {
         return s1.compareTo(s2);
     }
 
+    //Metodo recursivo para agregar un contacto
+    //Usa el metodo comparar para determinar hacia cual de los nodos hijos moverse
+    //Las llamadas recursivas se acumulan hasta que encuentra un nodo nulo
     private Nodo addR(Nodo now, String tel, String nombre, int inicio, int fin){
         if(now == null){
-            return new Nodo(tel, nombre, inicio, fin);
+            return new Nodo(tel, nombre, inicio, fin); //crea un nuevo nodo con los datos en esta posicion
         }
         if(comparar(nombre, now.nombre) < 0){
             now.left = addR(now.left, tel, nombre, inicio, fin);
@@ -34,11 +38,16 @@ public class Arbol implements Serializable {
         return now;
     }
 
+    //Metodo para acceder al metodo recursivo desde main
     public void add(String tel, String nombre, int inicio, int fin){
         raiz = addR(raiz, tel, nombre, inicio, fin);
         cant++;
     }
 
+    //Metodo recursivo para buscar un contacto
+    //Usa el metodo comparar para determinar hacia que nodo hijo moverse
+    //Retorna el nodo actual cuando encuentra una coincidencia
+    //Si no encuentra una coincidencia, las llamadas recursivas se acumulan hasta encontrar un nodo nulo
     private Nodo buscarR(Nodo now, String nombre){
         if(now == null){
             return null;
@@ -53,10 +62,15 @@ public class Arbol implements Serializable {
         }
     }
 
+    //Metodo para acceder al metodo recursivo desde main
     public Nodo buscar(String nombre){
         return buscarR(raiz, nombre);
     }
 
+    //Metodo recursivo para borrar un contacto
+    //Sigue la misma logica de los metodos anteriores
+    //Cuando encuentra una coincidencia reemplaza el nodo actual con el mayor menor
+    //Luego borra dicho nodo
     private Nodo borrarR(Nodo now, String nombre){
         if(now == null){
             return null;
@@ -85,11 +99,14 @@ public class Arbol implements Serializable {
         return now;
     }
 
+    //Metodo para acceder al metodo recursivo desde main
     public void borrar(String nombre){
         raiz = borrarR(raiz, nombre);
         cant--;
     }
 
+    //Metodo auxiliar para el metodo borrar
+    //Encuentra el mayor menor en una de las ramas
     private String findMin(Nodo raiz){
         if(raiz.left == null){
             return raiz.nombre;
@@ -98,6 +115,9 @@ public class Arbol implements Serializable {
         }
     }
 
+    //Metodo recursivo para mostrar la lista de contactos
+    //Se desplaza por el arbol imprimiendo en un JTextPane cada nodo no nulo
+    //Incorpora un contador que crece con cada llamada recursiva
     private int mostrarR(Nodo raiz, int cont, JTextPane instruccion){
         if(raiz.left != null){
             cont = mostrarR(raiz.left, cont, instruccion);
@@ -110,6 +130,7 @@ public class Arbol implements Serializable {
         return cont+1;
     }
 
+    //Metodo para acceder a mostrar desde main
     public void mostrar(JTextPane instruccion){
         Nodo rar = this.raiz;
         //System.out.println("#\tnombre\t\ttelefono\t\tinicio\t\tfin\n");
@@ -117,6 +138,9 @@ public class Arbol implements Serializable {
         mostrarR(rar, 1, instruccion);
     }
 
+    //Metodo recursivo para editar un contacto
+    //Misma logica de los metodos anteriores
+    //Incorpora un switch para determinar que informacion cambiar
     private Nodo editarR(int opc, Nodo now, String nombre, String nuevo, String tel, int inicio, int fin){
         if(now == null){
             return null;
@@ -136,6 +160,8 @@ public class Arbol implements Serializable {
         return now;
     }
 
+    //Metodo para acceder a editarR desde main
+    //No accede al metodo recursivo si el nombre a reemplazar es el mismo del contacto
     public void editar(int opc, String nombre, String nuevo, String tel, int inicio, int fin){
         if (opc==1 && !nombre.equals(nuevo)) {
             Nodo temp = buscar(nombre);
@@ -148,6 +174,8 @@ public class Arbol implements Serializable {
         raiz = editarR(opc, raiz, nombre, nuevo, tel, inicio, fin);
     }
 
+    //Metodo recursivo para convertir el arbol a un arreglo
+    //Sigue la misma logica que el metodo mostrar
     private static int toArrayR(Nodo raiz, int cont, Nodo[] arr){
         if(raiz.left != null){
             cont = toArrayR(raiz.left, cont, arr);
@@ -159,6 +187,7 @@ public class Arbol implements Serializable {
         return cont+1;
     }
 
+    //Metodo para acceder a toArrayR desde main
     public Nodo[] toArray(){
         Nodo rar = this.raiz;
         Nodo[] arr = new Nodo[cant];
@@ -166,6 +195,7 @@ public class Arbol implements Serializable {
         return arr;
     }
 
+    //Contador que recorre el arbol para medir su tamano
     private int setCant(Nodo raiz, int cont){
         if(raiz != null){
             cont = setCant(raiz.left, cont);
@@ -175,6 +205,7 @@ public class Arbol implements Serializable {
         return cont;
     }
 
+    //Serializa el arbol en un bloc de notas
     public void guardar() throws IOException, ClassNotFoundException {
         Nodo temp = raiz;
         cargar(1);
@@ -188,6 +219,7 @@ public class Arbol implements Serializable {
                 "Contactos", JOptionPane.DEFAULT_OPTION);
     }
 
+    //Deserializa el arbol si encuentra un archivo con los datos del objeto
     public void cargar(int op) throws ClassNotFoundException, IOException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream("contactos.txt"));
         Nodo temp = raiz;
@@ -205,6 +237,8 @@ public class Arbol implements Serializable {
         }
     }
 
+    //Metodo auxuliar para cargar
+    //Sirve para evitar que el arbol deserializado se sobreescriba por el arbol en memoria
     private void cargarR(Nodo temp){
         if(temp.left != null){
             cargarR(temp.left);

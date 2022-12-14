@@ -22,6 +22,7 @@ public class App extends JFrame implements ActionListener{
     private String box;
     private static Semaphore sema;
 
+    //Constructor para la interfaz de usuario
     public App(){
         sema = new Semaphore(0);
         box = "";
@@ -57,7 +58,7 @@ public class App extends JFrame implements ActionListener{
         Arbol arbol = new Arbol();
         Grafo grafo = null;
 
-
+        //Menu switch para controlar los algoritmos desde la interfaz
         int opc;
         volver:
         do{
@@ -244,7 +245,7 @@ public class App extends JFrame implements ActionListener{
                                 do {
                                     if(grafo != null){
                                         myApp.instruccion.setText("Ingrese elemento en el siguiente formato:\n" +
-                                                "'vertice origen','vertice','distancia'\n" +
+                                                "'vertice origen','vertice destino','distancia'\n" +
                                                 "Ejemplo: 0,1,4");
                                         myApp.instruccion.setText(myApp.instruccion.getText()+"\nActualmente: "+cont);
                                         sema.acquire();
