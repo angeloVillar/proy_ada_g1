@@ -2,28 +2,35 @@ package arbol;
 
 public class Conversion {
 
+    //Metodo para convertir la entrada del usuario como String (formato HH:MM) a int (minutos)
+    //Las horas es el valor que se encuentra antes del :
+    //Los minutos es el valor que se encuentra despues del :
     public static int stringToTime(String sTime){
         int timeInMins  =   0;
         String[] strArr =   sTime.split(":");
         int hour        =   Integer.parseInt(strArr[0]);
         int min         =   Integer.parseInt(strArr[1]);
 
-        if(hour < 8){
-            timeInMins  =   ((12+hour) * 60) + min ;
-        } else {
-            timeInMins  =   (hour * 60) + min;
-        }
+        timeInMins = hour*60 + min;
 
         return timeInMins;
     }
 
+    //Realiza una operacion matematica para convertir tiempo en minutos (int) a formato HH:MM (String)
     public static String timeToString(int sTime){
         String time;
         int hour = sTime/60, min = sTime%60;
-        if (hour >= 12) {
-            hour %= 12;
+        String min2;
+        if(min == 0){
+            time = hour + ":00";
+        } else if(min < 10){
+            time = hour + ":0" + min;
+        } else {
+            time = hour + ":" + min;
         }
-        time = Integer.toString(hour) + ":" + Integer.toString(min);
+        if(hour < 10){
+            time = "0" + time;
+        }
         return time;
     }
 

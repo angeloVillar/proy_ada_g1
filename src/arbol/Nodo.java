@@ -3,12 +3,13 @@ package arbol;
 import java.io.Serializable;
 
 public class Nodo implements Serializable {
-    int tel;
+    String tel;
     String nombre;
     int inicio, fin;
-    Nodo left, right;
+    Nodo left, right; //Para el arbol se usan ambos apuntadores, para la pila se usa uno solo
 
-    Nodo(int tel, String nombre, int inicio, int fin){
+    //Constructor
+    Nodo(String tel, String nombre, int inicio, int fin){
         this.tel = tel;
         this.nombre = nombre;
         this.inicio = inicio;
@@ -17,7 +18,7 @@ public class Nodo implements Serializable {
         this.right = null;
     }
 
-    public int getTel() {
+    public String getTel() {
         return tel;
     }
 
@@ -33,6 +34,7 @@ public class Nodo implements Serializable {
         return fin;
     }
 
+    //tiempo es el resultado entre el tiempo de fin y tiempo de inicio de cada nodo
     public int getTiempo(){
         return fin-inicio;
     }
