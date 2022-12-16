@@ -330,7 +330,7 @@ public class App extends JFrame implements ActionListener{
                             }
                             case 2:{
                                 int cont = 0;
-                                if (grafo != null) {
+                                if (grafo.getGrafo() != null) {
                                     for(int i=0; i<grafo.getCant(); i++){
                                         myApp.instruccion.setText("Ingrese un contacto");
                                         myApp.instruccion.setText(myApp.instruccion.getText()+"\nActualmente: "+cont);
@@ -349,6 +349,7 @@ public class App extends JFrame implements ActionListener{
                                     }
                                 } else {
                                     myApp.instruccion.setText("El grafo debe ser creado antes de usar esta opcion");
+                                    sema.acquire();
                                     break;
                                 }
                                 break;
@@ -356,7 +357,7 @@ public class App extends JFrame implements ActionListener{
                             case 3:{
                                 int cont = 0;
                                 do {
-                                    if(grafo != null){
+                                    if(grafo.getGrafo() != null){
                                         myApp.instruccion.setText("Ingrese elemento en el siguiente formato:\n" +
                                                 "'contacto origen','contacto destino','distancia en km'\n" +
                                                 "Ejemplo: alfred,beto,30");
@@ -380,6 +381,7 @@ public class App extends JFrame implements ActionListener{
                                         }
                                     } else {
                                         myApp.instruccion.setText("El grafo debe ser creado antes de usar esta opcion");
+                                        sema.acquire();
                                         break;
                                     }
                                 } while (!myApp.box.equals("/back"));
@@ -389,7 +391,7 @@ public class App extends JFrame implements ActionListener{
                             case 4:{
                                 int cont = 0;
                                 do {
-                                    if(grafo != null){
+                                    if(grafo.getGrafo() != null){
                                         myApp.instruccion.setText("Ingrese elemento en el siguiente formato:\n" +
                                                 "'vertice origen','vertice destino','distancia'\n" +
                                                 "Ejemplo: 0,1,4");
@@ -407,6 +409,7 @@ public class App extends JFrame implements ActionListener{
                                         cont++;
                                     } else {
                                         myApp.instruccion.setText("El grafo debe ser creado antes de usar esta opcion");
+                                        sema.acquire();
                                         break;
                                     }
                                 } while (!myApp.box.equals("/back"));
@@ -419,7 +422,7 @@ public class App extends JFrame implements ActionListener{
                                 break;
                             }
                             case 6:{
-                                if(grafo != null){
+                                if(grafo.getGrafo() != null){
                                     grafo.caminoMasCortoNombres(myApp.mostrado);
                                     myApp.instruccion.setText("Presione EJECUTAR para continuar");
                                 } else {
@@ -429,7 +432,7 @@ public class App extends JFrame implements ActionListener{
                                 break;
                             }
                             case 7:{
-                                if(grafo != null){
+                                if(grafo.getGrafo() != null){
                                     grafo.caminoMasCorto(myApp.mostrado);
                                     myApp.instruccion.setText("Presione EJECUTAR para continuar");
                                 } else {
