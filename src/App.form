@@ -69,27 +69,6 @@
               <text value="Lista de contactos:"/>
             </properties>
           </component>
-          <scrollpane id="48e9d">
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="4" hsize-policy="4" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <minimum-size width="-1" height="130"/>
-                <preferred-size width="-1" height="130"/>
-                <maximum-size width="-1" height="130"/>
-              </grid>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="c22cc" class="javax.swing.JTextPane" binding="mostrado">
-                <constraints/>
-                <properties>
-                  <background color="-1541"/>
-                  <caretColor color="-15000805"/>
-                  <editable value="false"/>
-                </properties>
-              </component>
-            </children>
-          </scrollpane>
           <scrollpane id="d4678">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="4" hsize-policy="4" anchor="1" fill="1" indent="0" use-parent-layout="false">
@@ -107,6 +86,32 @@
                   <editable value="false"/>
                 </properties>
               </component>
+            </children>
+          </scrollpane>
+          <scrollpane id="31b83" binding="bajo">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="4" hsize-policy="4" anchor="1" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="-1" height="140"/>
+                <preferred-size width="-1" height="140"/>
+                <maximum-size width="-1" height="140"/>
+              </grid>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="4ba0a" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints/>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="4b431" class="javax.swing.JTextPane" binding="mostrado">
+                    <constraints border-constraint="Center"/>
+                    <properties>
+                      <editable value="false"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
             </children>
           </scrollpane>
         </children>

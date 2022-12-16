@@ -130,11 +130,19 @@ public class Grafo implements Serializable{
     public void mostrar(JTextPane console){
         if(cant==0 || grafo==null){return;}
         console.setText("");
-        console.setText(console.getText() + 0 + " -> | " + grafo.get(0).print());
+        console.setText(console.getText() + 0 + " -> | " + grafo.get(0).print(true, this));
         for(int i=1; i<cant; i++){
-            console.setText(console.getText() + "\n" + i + " -> | " + grafo.get(i).print());
+            console.setText(console.getText() + "\n" + i + " -> | " + grafo.get(i).print(true, this));
         }
+    }
 
+    public void mostrarN(JTextPane console){
+        if(cant==0 || grafo==null){return;}
+        console.setText("");
+        console.setText(console.getText() + traducirOUT(0) + " -> | " + grafo.get(0).print(false, this));
+        for(int i=1; i<cant; i++){
+            console.setText(console.getText() + "\n" + traducirOUT(i) + " -> | " + grafo.get(i).print(false, this));
+        }
     }
 
 }

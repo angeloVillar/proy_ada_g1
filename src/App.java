@@ -22,6 +22,7 @@ public class App extends JFrame implements ActionListener{
     private JTextPane instruccion;
     private JTextPane mostrado;
     private JTextField listaDeContactosTextField;
+    private JScrollPane bajo;
     private String box;
     private static Semaphore sema;
 
@@ -302,7 +303,7 @@ public class App extends JFrame implements ActionListener{
                                 2.- Ingresar contactos involucrados
                                 3.- Insertar nuevo camino entre dos elementos (nombres)
                                 4.- Insertar nuevo camino entre dos elementos (indices)
-                                5.- Mostrar grafo
+                                5.- Mostrar grafo (mapa) con nombres
                                 6.- Hallar ruta mas corta desde el origen (nombres)
                                 7.- Hallar ruta mas corta desde el origen (indices)
                                 8.- Guardar grafo
@@ -375,6 +376,7 @@ public class App extends JFrame implements ActionListener{
                                                 sema.acquire();
                                                 break;
                                             }
+                                            grafo.mostrar(myApp.mostrado);
                                             cont++;
                                         } else {
                                             myApp.instruccion.setText("uno de los contactos no fue encontrado");
@@ -406,6 +408,7 @@ public class App extends JFrame implements ActionListener{
                                             sema.acquire();
                                             break;
                                         }
+                                        grafo.mostrar(myApp.mostrado);
                                         cont++;
                                     } else {
                                         myApp.instruccion.setText("El grafo debe ser creado antes de usar esta opcion");
@@ -417,7 +420,8 @@ public class App extends JFrame implements ActionListener{
                                 break;
                             }
                             case 5:{
-                                grafo.mostrar(myApp.mostrado);
+                                grafo.mostrarN(myApp.mostrado);
+                                myApp.instruccion.setText("Presione EJECUTAR para continuar...");
                                 sema.acquire();
                                 break;
                             }
@@ -491,4 +495,7 @@ public class App extends JFrame implements ActionListener{
         sema.release();
     }
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+    }
 }

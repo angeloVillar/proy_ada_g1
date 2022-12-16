@@ -56,7 +56,7 @@ public class Lista implements Cloneable, Serializable {
     }
 
     //Metodo para mostrar los elementos de la lista (se uso para probar el algoritmo)
-    public String print(){
+    public String print(boolean opc, Grafo grafo){
         StringBuilder ret = new StringBuilder();
         if(base == null){
             //System.out.println("lista vacia");
@@ -66,7 +66,11 @@ public class Lista implements Cloneable, Serializable {
             NodoDJ temp = base;
             while (temp != null){
                 //System.out.println(temp.getVertice() + " , " + temp.getDistancia());
-                ret.append(temp.getVertice()).append(" , ").append(temp.getDistancia()).append(" | ");
+                if (opc) {
+                    ret.append(temp.getVertice()).append(" , ").append(temp.getDistancia()).append(" | ");
+                } else {
+                    ret.append(grafo.traducirOUT(temp.getVertice())).append(" , ").append(temp.getDistancia()).append(" | ");
+                }
                 temp = temp.getNext();
             }
             return ret.toString();
