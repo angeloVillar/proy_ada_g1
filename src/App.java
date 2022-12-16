@@ -64,7 +64,13 @@ public class App extends JFrame implements ActionListener{
         do{
             myApp.instruccion.setText(menu());
             sema.acquire();
-            opc=Integer.parseInt(myApp.box);
+            try {
+                opc=Integer.parseInt(myApp.box);
+            } catch (NumberFormatException e) {
+                //System.exit(0);
+                opc=-1;
+                //throw new RuntimeException("Ninguna opcion fue ingresada");
+            }
             switch(opc){
                 case 1:{
                     myApp.instruccion.setText("Nombre: ");
@@ -183,13 +189,37 @@ public class App extends JFrame implements ActionListener{
                     break;
                 }
                 case 4:{
+                    myApp.instruccion.setText("Nombre: ");
+                    sema.acquire();
+                    if(myApp.box.equals("/back")){break;}
+                    String nom=myApp.box;
+                    arbol.borrar(nom);
+                    if(arbol.getCant()>0){
+                        arbol.mostrar(myApp.mostrado);
+                    }else{
+                        myApp.mostrado.setText("");
+                    }
+                    myApp.instruccion.setText(myApp.instruccion.getText()+"\nPresione 'Ejecutar' para continuar..");
+                    sema.acquire();
+                    if(myApp.box.equals("/back")){break;}
+                    break;
+                }
+                case 5:{
                     arbol.mostrar(myApp.mostrado);
                     myApp.instruccion.setText("Presione 'Ejecutar' para continuar..");
                     sema.acquire();
                     if(myApp.box.equals("/back")){break;}
                     break;
                 }
-                case 5:{
+                case 6:{
+                    arbol = new Arbol();
+                    myApp.mostrado.setText("");
+                    myApp.instruccion.setText("Presione 'Ejecutar' para continuar..");
+                    sema.acquire();
+                    if(myApp.box.equals("/back")){break;}
+                    break;
+                }
+                case 7:{
                     myApp.instruccion.setText("");
                     Nodo[] arr = arbol.toArray();
                     MaxContactos.maxContactos(arr, myApp.instruccion);
@@ -198,15 +228,15 @@ public class App extends JFrame implements ActionListener{
                     if(myApp.box.equals("/back")){break;}
                     break;
                 }
-                case 6:{
+                case 8:{
                     arbol.guardar();
                     break;
                 }
-                case 7:{
+                case 9:{
                     arbol.cargar(0);
                     break;
                 }
-                case 8:{
+                case 10:{
 
 
                     do {
@@ -347,9 +377,12 @@ public class App extends JFrame implements ActionListener{
 
                     break;
                 }
+                default:{
+                    break;
+                }
             }
         }while(opc!=0);
-
+        System.exit(0);
 
     }
 
@@ -362,11 +395,13 @@ public class App extends JFrame implements ActionListener{
                 1.- Agregar contacto
                 2.- Editar contacto
                 3.- Buscar telefono por nombre
-                4.- Ordenar contactos alfabeticamente
-                5.- Organizar visitas individuales segun tiempo disponible
-                6.- Exportar contactos
-                7.- Importar contactos
-                8.- Menu de citas
+                4.- Borrar contacto
+                5.- Ordenar contactos alfabeticamente
+                6.- VACIAR lista de contactos
+                7.- Organizar visitas individuales segun tiempo disponible
+                8.- Exportar contactos
+                9.- Importar contactos
+                10.- Menu de citas
                 """;
     }
 
