@@ -1,15 +1,29 @@
 package arbol;
 
+import ex.WrongInputException;
+
 public class Conversion {
 
     //Metodo para convertir la entrada del usuario como String (formato HH:MM) a int (minutos)
     //Las horas es el valor que se encuentra antes del :
     //Los minutos es el valor que se encuentra despues del :
-    public static int stringToTime(String sTime){
+    public static int stringToTime(String sTime) throws WrongInputException {
         int timeInMins  =   0;
         String[] strArr =   sTime.split(":");
-        int hour        =   Integer.parseInt(strArr[0]);
-        int min         =   Integer.parseInt(strArr[1]);
+        if(strArr.length!=2){
+            throw new WrongInputException("Formato de hora incorrecto");
+        }
+        if(strArr[0].length()>2 || strArr[1].length()>2){
+            throw new WrongInputException("Formato de hora incorrecto");
+        }
+        int hour        = 0;
+        int min         = 0;
+        try {
+            hour = Integer.parseInt(strArr[0]);
+            min = Integer.parseInt(strArr[1]);
+        } catch (NumberFormatException e) {
+            throw new WrongInputException(e);
+        }
 
         timeInMins = hour*60 + min;
 
