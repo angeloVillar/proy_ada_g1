@@ -56,16 +56,20 @@ public class Lista implements Cloneable, Serializable {
     }
 
     //Metodo para mostrar los elementos de la lista (se uso para probar el algoritmo)
-    public void print(){
+    public String print(){
+        StringBuilder ret = new StringBuilder();
         if(base == null){
-            System.out.println("lista vacia");
+            //System.out.println("lista vacia");
+            return "--";
         } else {
-            System.out.println("Lista:");
+            //System.out.println("Lista:");
             NodoDJ temp = base;
             while (temp != null){
-                System.out.println(temp.getVertice() + " , " + temp.getDistancia());
+                //System.out.println(temp.getVertice() + " , " + temp.getDistancia());
+                ret.append(temp.getVertice()).append(" , ").append(temp.getDistancia()).append(" | ");
                 temp = temp.getNext();
             }
+            return ret.toString();
         }
     }
 

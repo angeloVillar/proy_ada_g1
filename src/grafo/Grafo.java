@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import arbol.Arbol;
+import arbol.Nodo;
 import ex.WrongInputException;
 
 public class Grafo implements Serializable{
@@ -27,6 +28,8 @@ public class Grafo implements Serializable{
         nombres = new String[cantidad];
         Arrays.fill(nombres, "");
     }
+
+    public Grafo(){}
 
     //Insertar una nueva relacion entre nodos
     public void insert(int org, int v, int d) throws WrongInputException {
@@ -121,6 +124,17 @@ public class Grafo implements Serializable{
     //Devuelve el nombre de un contacto en determinado indice del arreglo traductor
     public String traducirOUT(int nm){
         return nombres[nm];
+    }
+
+    //Imprimir el grafo
+    public void mostrar(JTextPane console){
+        if(cant==0 || grafo==null){return;}
+        console.setText("");
+        console.setText(console.getText() + 0 + " -> | " + grafo.get(0).print());
+        for(int i=1; i<cant; i++){
+            console.setText(console.getText() + "\n" + i + " -> | " + grafo.get(i).print());
+        }
+
     }
 
 }

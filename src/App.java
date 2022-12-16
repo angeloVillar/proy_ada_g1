@@ -76,7 +76,7 @@ public class App extends JFrame implements ActionListener{
 
         App myApp = new App();
         Arbol arbol = new Arbol();
-        Grafo grafo = null;
+        Grafo grafo = new Grafo();
 
         //Menu switch para controlar los algoritmos desde la interfaz
         int opc;
@@ -290,28 +290,29 @@ public class App extends JFrame implements ActionListener{
                 }
                 case 10:{
 
-
+                    myApp.mostrado.setText("");
                     do {
                         int op = 0;
                         do{
-                            myApp.mostrado.setText("");
                             myApp.listaDeContactosTextField.setText("Grafo:");
+                            grafo.mostrar(myApp.mostrado);
                             myApp.instruccion.setText("""
                                 Menu de mapeo de citas:
                                 1.- Crear nuevo grafo
                                 2.- Ingresar contactos involucrados
                                 3.- Insertar nuevo camino entre dos elementos (nombres)
                                 4.- Insertar nuevo camino entre dos elementos (indices)
-                                5.- Hallar ruta mas corta desde el origen (nombres)
-                                6.- Hallar ruta mas corta desde el origen (indices)
-                                7.- Guardar grafo
-                                8.- Cargar grafo
+                                5.- Mostrar grafo
+                                6.- Hallar ruta mas corta desde el origen (nombres)
+                                7.- Hallar ruta mas corta desde el origen (indices)
+                                8.- Guardar grafo
+                                9.- Cargar grafo
                                 Ingrese una opcion:
                                 """);
                             sema.acquire();
                             if(myApp.box.equals("/back")){continue volver;}
                             op=Integer.parseInt(myApp.box);
-                        }while(op<0||op>8);
+                        }while(op<0||op>9);
 
                         switch(op){
                             case 1:{
@@ -413,26 +414,35 @@ public class App extends JFrame implements ActionListener{
                                 break;
                             }
                             case 5:{
-                                if(grafo != null){
-                                    grafo.caminoMasCortoNombres(myApp.mostrado);
-                                } else {
-                                    myApp.instruccion.setText("El grafo debe ser creado antes de usar esta opcion");
-                                }
+                                grafo.mostrar(myApp.mostrado);
+                                sema.acquire();
                                 break;
                             }
                             case 6:{
                                 if(grafo != null){
-                                    grafo.caminoMasCorto(myApp.mostrado);
+                                    grafo.caminoMasCortoNombres(myApp.mostrado);
+                                    myApp.instruccion.setText("Presione EJECUTAR para continuar");
                                 } else {
                                     myApp.instruccion.setText("El grafo debe ser creado antes de usar esta opcion");
                                 }
+                                sema.acquire();
                                 break;
                             }
                             case 7:{
-                                Grafo.guardar(grafo);
+                                if(grafo != null){
+                                    grafo.caminoMasCorto(myApp.mostrado);
+                                    myApp.instruccion.setText("Presione EJECUTAR para continuar");
+                                } else {
+                                    myApp.instruccion.setText("El grafo debe ser creado antes de usar esta opcion");
+                                }
+                                sema.acquire();
                                 break;
                             }
                             case 8:{
+                                Grafo.guardar(grafo);
+                                break;
+                            }
+                            case 9:{
                                 grafo = Grafo.cargar();
                                 break;
                             }
