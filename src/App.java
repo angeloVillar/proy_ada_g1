@@ -31,6 +31,7 @@ public class App extends JFrame implements ActionListener{
         box = "";
         setContentPane(panel1);
         setTitle("Analisis y Diseno de Algoritmos");
+        //setTitle("Estructuras de Datos - G3");
         setSize(400, 450);
         setLocation(650, 200);
         setResizable(false);
@@ -58,7 +59,6 @@ public class App extends JFrame implements ActionListener{
         String enter = "enter";
         iMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), enter);
         aMap.put(enter, new AbstractAction() {
-
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 box = ingreso.getText();
@@ -70,9 +70,9 @@ public class App extends JFrame implements ActionListener{
     }
 
     public static void main(String[] args) throws Exception {
-/*        try {
+        try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch(Exception ignored){}*/
+        } catch(Exception ignored){}
 
         App myApp = new App();
         Arbol arbol = new Arbol();
@@ -82,6 +82,8 @@ public class App extends JFrame implements ActionListener{
         int opc;
         volver:
         do{
+            myApp.listaDeContactosTextField.setText("Lista de contactos:");
+            arbol.mostrar(myApp.mostrado);
             myApp.instruccion.setText(menu());
             sema.acquire();
             try {
@@ -114,7 +116,7 @@ public class App extends JFrame implements ActionListener{
                     try {
                         arbol.add(tlf, nom, Conversion.stringToTime(ini), Conversion.stringToTime(fn));
                     } catch (WrongInputException e) {
-                        myApp.instruccion.setText("Formato de hora incorrecto!");
+                        myApp.instruccion.setText(e.getMessage());
                         sema.acquire();
                         if(myApp.box.equals("/back")){break;}
                         break;
@@ -192,7 +194,7 @@ public class App extends JFrame implements ActionListener{
                             try {
                                 ini = Conversion.stringToTime(aux);
                             } catch (WrongInputException e) {
-                                myApp.instruccion.setText("Formato de hora incorrecto!");
+                                myApp.instruccion.setText(e.getMessage());
                                 sema.acquire();
                                 continue volver;
                             }
@@ -207,7 +209,7 @@ public class App extends JFrame implements ActionListener{
                             try {
                                 fn = Conversion.stringToTime(aux);
                             } catch (WrongInputException e) {
-                                myApp.instruccion.setText("Formato de hora incorrecto!");
+                                myApp.instruccion.setText(e.getMessage());
                                 sema.acquire();
                                 continue volver;
                             }
@@ -292,6 +294,8 @@ public class App extends JFrame implements ActionListener{
                     do {
                         int op = 0;
                         do{
+                            myApp.mostrado.setText("");
+                            myApp.listaDeContactosTextField.setText("Grafo:");
                             myApp.instruccion.setText("""
                                 Menu de mapeo de citas:
                                 1.- Crear nuevo grafo
@@ -365,7 +369,7 @@ public class App extends JFrame implements ActionListener{
                                             try {
                                                 grafo.insert(c1, c2, Integer.parseInt(t[2]));
                                             } catch (Exception e) {
-                                                myApp.instruccion.setText("Formato incorrecto!");
+                                                myApp.instruccion.setText(e.getMessage());
                                                 sema.acquire();
                                                 break;
                                             }
@@ -395,7 +399,7 @@ public class App extends JFrame implements ActionListener{
                                         try {
                                             grafo.insert(Integer.parseInt(t[0]), Integer.parseInt(t[1]), Integer.parseInt(t[2]));
                                         } catch (Exception e) {
-                                            myApp.instruccion.setText("Formato incorrecto!");
+                                            myApp.instruccion.setText(e.getMessage());
                                             sema.acquire();
                                             break;
                                         }

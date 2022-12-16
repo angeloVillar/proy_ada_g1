@@ -2,6 +2,8 @@ package ex;
 
 import javax.sql.rowset.spi.TransactionalWriter;
 
+//Se creo esta excepcion para mostrar mensajes de error en el menu y evitar que el programa se cierre
+
 public class WrongInputException extends Exception{
     public WrongInputException(String mensaje){
         super(mensaje);

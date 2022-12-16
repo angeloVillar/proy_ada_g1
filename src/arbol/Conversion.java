@@ -11,10 +11,10 @@ public class Conversion {
         int timeInMins  =   0;
         String[] strArr =   sTime.split(":");
         if(strArr.length!=2){
-            throw new WrongInputException("Formato de hora incorrecto");
+            throw new WrongInputException("Formato de hora incorrecto!");
         }
         if(strArr[0].length()>2 || strArr[1].length()>2){
-            throw new WrongInputException("Formato de hora incorrecto");
+            throw new WrongInputException("Formato de hora incorrecto!");
         }
         int hour        = 0;
         int min         = 0;
@@ -22,7 +22,7 @@ public class Conversion {
             hour = Integer.parseInt(strArr[0]);
             min = Integer.parseInt(strArr[1]);
         } catch (NumberFormatException e) {
-            throw new WrongInputException(e);
+            throw new WrongInputException("No se ingreso una hora valida!",e);
         }
 
         timeInMins = hour*60 + min;

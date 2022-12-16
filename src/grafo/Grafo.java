@@ -31,7 +31,7 @@ public class Grafo implements Serializable{
     //Insertar una nueva relacion entre nodos
     public void insert(int org, int v, int d) throws WrongInputException {
         if(org > cant-1 || org < 0 || v > cant-1 || v < 0){
-            throw new WrongInputException();
+            throw new WrongInputException("Formato incorrecto!");
         }
         grafo.get(org).addFinal(v, d);
     }
@@ -92,6 +92,7 @@ public class Grafo implements Serializable{
         return g;
     }
 
+    //Sirve para asignar un contacto a cada indice de un arreglo
     public void nombrar(String nm){
         if(!nombres[nombres.length-1].equals("")){
             System.out.println("Arreglo lleno");
@@ -105,6 +106,7 @@ public class Grafo implements Serializable{
         }
     }
 
+    //Devuelve el indice que le corresponde a un contacto en el arreglo traductor
     public int traducirIN(String nm){
         int i=0;
         for(String n : nombres){
@@ -116,6 +118,7 @@ public class Grafo implements Serializable{
         return -1;
     }
 
+    //Devuelve el nombre de un contacto en determinado indice del arreglo traductor
     public String traducirOUT(int nm){
         return nombres[nm];
     }
