@@ -132,6 +132,7 @@ public class Arbol implements Serializable {
 
     //Metodo para acceder a mostrar desde main
     public void mostrar(JTextPane instruccion){
+        if(cant==0){return;}
         Nodo rar = this.raiz;
         //System.out.println("#\tnombre\t\ttelefono\t\tinicio\t\tfin\n");
         instruccion.setText("");
@@ -207,13 +208,17 @@ public class Arbol implements Serializable {
 
     //Serializa el arbol en un bloc de notas
     public void guardar() throws IOException, ClassNotFoundException {
-        Nodo temp = raiz;
-        cargar(1);
+        boolean flag = false;
         File f = new File("contactos.txt");
+        Nodo temp = raiz;
+        if(f.exists() && !f.isDirectory()) {
+            cargar(1);
+            flag = true;
+        }
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("contactos.txt"));
         out.writeObject(raiz);
         out.close();
-        raiz = temp;
+        if(flag){raiz = temp;}
         java.awt.Toolkit.getDefaultToolkit().beep();
         JOptionPane.showConfirmDialog(null, "Los contactos fueron exportados",
                 "Contactos", JOptionPane.DEFAULT_OPTION);

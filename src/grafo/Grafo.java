@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import arbol.Arbol;
+import ex.WrongInputException;
 
 public class Grafo implements Serializable{
     int cant;
@@ -28,7 +29,10 @@ public class Grafo implements Serializable{
     }
 
     //Insertar una nueva relacion entre nodos
-    public void insert(int org, int v, int d){
+    public void insert(int org, int v, int d) throws WrongInputException {
+        if(org > cant-1 || org < 0 || v > cant-1 || v < 0){
+            throw new WrongInputException();
+        }
         grafo.get(org).addFinal(v, d);
     }
 

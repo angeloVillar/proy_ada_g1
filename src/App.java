@@ -3,10 +3,13 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.concurrent.Semaphore;
 
 import arbol.*;
+import ex.WrongInputException;
 import horarios.*;
 import grafo.*;
 
@@ -47,9 +50,26 @@ public class App extends JFrame implements ActionListener{
                 sema.release();
             }
         });
+
+        int condition = JComponent.WHEN_FOCUSED;
+        InputMap iMap = ingreso.getInputMap(condition);
+        ActionMap aMap = ingreso.getActionMap();
+
+        String enter = "enter";
+        iMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), enter);
+        aMap.put(enter, new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                box = ingreso.getText();
+                ingreso.setText("");
+                sema.release();
+            }
+        });
+
     }
 
-    public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException, CloneNotSupportedException {
+    public static void main(String[] args) throws Exception {
 /*        try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch(Exception ignored){}*/
@@ -64,7 +84,13 @@ public class App extends JFrame implements ActionListener{
         do{
             myApp.instruccion.setText(menu());
             sema.acquire();
-            opc=Integer.parseInt(myApp.box);
+            try {
+                opc=Integer.parseInt(myApp.box);
+            } catch (NumberFormatException e) {
+                //System.exit(0);
+                opc=-1;
+                //throw new RuntimeException("Ninguna opcion fue ingresada");
+            }
             switch(opc){
                 case 1:{
                     myApp.instruccion.setText("Nombre: ");
@@ -85,7 +111,14 @@ public class App extends JFrame implements ActionListener{
                     sema.acquire();
                     if(myApp.box.equals("/back")){break;}
                     String fn=myApp.box;
-                    arbol.add(tlf, nom, Conversion.stringToTime(ini), Conversion.stringToTime(fn));
+                    try {
+                        arbol.add(tlf, nom, Conversion.stringToTime(ini), Conversion.stringToTime(fn));
+                    } catch (WrongInputException e) {
+                        myApp.instruccion.setText("Formato de hora incorrecto!");
+                        sema.acquire();
+                        if(myApp.box.equals("/back")){break;}
+                        break;
+                    }
                     arbol.mostrar(myApp.mostrado);
                     myApp.instruccion.setText("Presione 'Ejecutar' para continuar..");
                     sema.acquire();
@@ -108,6 +141,12 @@ public class App extends JFrame implements ActionListener{
                         if(myApp.box.equals("/back")){continue volver;}
                         //i = Integer.parseInt(myApp.box);
                         nombre = myApp.box;
+                        if(arbol.buscar(nombre)==null){
+                            myApp.instruccion.setText("No se ingreso un contacto valido");
+                            sema.acquire();
+                            if(myApp.box.equals("/back")){break;}
+                            continue volver;
+                        }
                     }while(i<0||i>arbol.getCant());
 
                     do{
@@ -121,7 +160,11 @@ public class App extends JFrame implements ActionListener{
                             """);
                         sema.acquire();
                         if(myApp.box.equals("/back")){continue volver;}
-                        op=Integer.parseInt(myApp.box);
+                        try {
+                            op=Integer.parseInt(myApp.box);
+                        } catch (NumberFormatException e) {
+                            continue volver;
+                        }
                     }while(op<0||op>4);
 
                     switch(op){
@@ -146,7 +189,13 @@ public class App extends JFrame implements ActionListener{
                             sema.acquire();
                             if(myApp.box.equals("/back")){continue volver;}
                             String aux=myApp.box;
-                            ini = Conversion.stringToTime(aux);
+                            try {
+                                ini = Conversion.stringToTime(aux);
+                            } catch (WrongInputException e) {
+                                myApp.instruccion.setText("Formato de hora incorrecto!");
+                                sema.acquire();
+                                continue volver;
+                            }
                             break;
                         }
 
@@ -155,7 +204,13 @@ public class App extends JFrame implements ActionListener{
                             sema.acquire();
                             if(myApp.box.equals("/back")){continue volver;}
                             String aux=myApp.box;
-                            fn = Conversion.stringToTime(aux);
+                            try {
+                                fn = Conversion.stringToTime(aux);
+                            } catch (WrongInputException e) {
+                                myApp.instruccion.setText("Formato de hora incorrecto!");
+                                sema.acquire();
+                                continue volver;
+                            }
                             break;
                         }
 
@@ -176,6 +231,7 @@ public class App extends JFrame implements ActionListener{
                     sema.acquire();
                     if(myApp.box.equals("/back")){break;}
                     String nom=myApp.box;
+                    if(arbol.buscar(nom)==null){break;}
                     myApp.instruccion.setText("arbol.buscar(\""+nom+"\").tel = " + arbol.buscar(nom).getTel());
                     myApp.instruccion.setText(myApp.instruccion.getText()+"\nPresione 'Ejecutar' para continuar..");
                     sema.acquire();
@@ -183,13 +239,37 @@ public class App extends JFrame implements ActionListener{
                     break;
                 }
                 case 4:{
+                    myApp.instruccion.setText("Nombre: ");
+                    sema.acquire();
+                    if(myApp.box.equals("/back")){break;}
+                    String nom=myApp.box;
+                    arbol.borrar(nom);
+                    if(arbol.getCant()>0){
+                        arbol.mostrar(myApp.mostrado);
+                    }else{
+                        myApp.mostrado.setText("");
+                    }
+                    myApp.instruccion.setText(myApp.instruccion.getText()+"\nPresione 'Ejecutar' para continuar..");
+                    sema.acquire();
+                    if(myApp.box.equals("/back")){break;}
+                    break;
+                }
+                case 5:{
                     arbol.mostrar(myApp.mostrado);
                     myApp.instruccion.setText("Presione 'Ejecutar' para continuar..");
                     sema.acquire();
                     if(myApp.box.equals("/back")){break;}
                     break;
                 }
-                case 5:{
+                case 6:{
+                    arbol = new Arbol();
+                    myApp.mostrado.setText("");
+                    myApp.instruccion.setText("Presione 'Ejecutar' para continuar..");
+                    sema.acquire();
+                    if(myApp.box.equals("/back")){break;}
+                    break;
+                }
+                case 7:{
                     myApp.instruccion.setText("");
                     Nodo[] arr = arbol.toArray();
                     MaxContactos.maxContactos(arr, myApp.instruccion);
@@ -198,15 +278,15 @@ public class App extends JFrame implements ActionListener{
                     if(myApp.box.equals("/back")){break;}
                     break;
                 }
-                case 6:{
+                case 8:{
                     arbol.guardar();
                     break;
                 }
-                case 7:{
+                case 9:{
                     arbol.cargar(0);
                     break;
                 }
-                case 8:{
+                case 10:{
 
 
                     do {
@@ -282,7 +362,13 @@ public class App extends JFrame implements ActionListener{
                                         if(arbol.buscar(t[0])!=null && arbol.buscar(t[1])!=null){
                                             int c1 = grafo.traducirIN(t[0]);
                                             int c2 = grafo.traducirIN(t[1]);
-                                            grafo.insert(c1, c2, Integer.parseInt(t[2]));
+                                            try {
+                                                grafo.insert(c1, c2, Integer.parseInt(t[2]));
+                                            } catch (Exception e) {
+                                                myApp.instruccion.setText("Formato incorrecto!");
+                                                sema.acquire();
+                                                break;
+                                            }
                                             cont++;
                                         } else {
                                             myApp.instruccion.setText("uno de los contactos no fue encontrado");
@@ -306,7 +392,13 @@ public class App extends JFrame implements ActionListener{
                                         sema.acquire();
                                         if(myApp.box.equals("/back")){break;}
                                         String[] t = myApp.box.split(",");
-                                        grafo.insert(Integer.parseInt(t[0]), Integer.parseInt(t[1]), Integer.parseInt(t[2]));
+                                        try {
+                                            grafo.insert(Integer.parseInt(t[0]), Integer.parseInt(t[1]), Integer.parseInt(t[2]));
+                                        } catch (Exception e) {
+                                            myApp.instruccion.setText("Formato incorrecto!");
+                                            sema.acquire();
+                                            break;
+                                        }
                                         cont++;
                                     } else {
                                         myApp.instruccion.setText("El grafo debe ser creado antes de usar esta opcion");
@@ -347,9 +439,12 @@ public class App extends JFrame implements ActionListener{
 
                     break;
                 }
+                default:{
+                    break;
+                }
             }
         }while(opc!=0);
-
+        System.exit(0);
 
     }
 
@@ -362,11 +457,13 @@ public class App extends JFrame implements ActionListener{
                 1.- Agregar contacto
                 2.- Editar contacto
                 3.- Buscar telefono por nombre
-                4.- Ordenar contactos alfabeticamente
-                5.- Organizar visitas individuales segun tiempo disponible
-                6.- Exportar contactos
-                7.- Importar contactos
-                8.- Menu de citas
+                4.- Borrar contacto
+                5.- Ordenar contactos alfabeticamente
+                6.- VACIAR lista de contactos
+                7.- Organizar visitas individuales segun tiempo disponible
+                8.- Exportar contactos
+                9.- Importar contactos
+                10.- Menu de citas
                 """;
     }
 
