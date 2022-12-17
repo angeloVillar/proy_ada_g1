@@ -32,8 +32,8 @@ public class App extends JFrame implements ActionListener{
         sema = new Semaphore(0);
         box = "";
         setContentPane(panel1);
-        setTitle("Analisis y Diseno de Algoritmos");
-        //setTitle("Estructuras de Datos - G3");
+        //setTitle("Analisis y Diseno de Algoritmos");
+        setTitle("Estructuras de Datos - G3");
         setSize(400, 450);
         setLocation(650, 200);
         setResizable(false);
@@ -332,12 +332,20 @@ public class App extends JFrame implements ActionListener{
                                 myApp.instruccion.setText("Ingrese cantidad de elementos del grafo:");
                                 sema.acquire();
                                 if(myApp.box.equals("/back")){continue;}
-                                ca = Integer.parseInt(myApp.box);
+                                try {
+                                    ca = Integer.parseInt(myApp.box);
+                                } catch (NumberFormatException e) {
+                                    ca = 0;
+                                }
                                 myApp.instruccion.setText("Ingrese elemento de origen\nNumero del 0 al "+Integer.toString(ca-1));
                                 sema.acquire();
                                 if(myApp.box.equals("/back")){continue;}
-                                or = Integer.parseInt(myApp.box);
-                                grafo = new Grafo(ca, or);
+                                try {
+                                    or = Integer.parseInt(myApp.box);
+                                } catch (NumberFormatException e) {
+                                    or = 0;
+                                }
+                                if(ca>0){grafo = new Grafo(ca, or);}
                                 break;
                             }
                             case 2:{
