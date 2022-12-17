@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -39,10 +40,20 @@ public class App extends JFrame implements ActionListener{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
+
         SimpleAttributeSet attributeSet = new SimpleAttributeSet();
+        StyleConstants.setFontSize(attributeSet, 12);
         StyleConstants.setBold(attributeSet, true);
         instruccion.setCharacterAttributes(attributeSet, true);
         instruccion.setText(menu());
+
+        SimpleAttributeSet attributeSet1 = new SimpleAttributeSet();
+        StyleConstants.setFontSize(attributeSet1, 12);
+        mostrado.setCharacterAttributes(attributeSet1, true);
+
+        Font font1 = new Font("SansSerif", Font.PLAIN, 12);
+        listaDeContactosTextField.setFont(font1);
+
         ejecutarButton.addActionListener(this);
         volverButton.addActionListener(new ActionListener() {
             @Override
@@ -298,7 +309,7 @@ public class App extends JFrame implements ActionListener{
                             myApp.listaDeContactosTextField.setText("Grafo:");
                             grafo.mostrar(myApp.mostrado);
                             myApp.instruccion.setText("""
-                                Menu de mapeo de citas:
+                                MENU DE MAPEO DE CITAS:
                                 1.- Crear nuevo grafo
                                 2.- Ingresar contactos involucrados
                                 3.- Insertar nuevo camino entre dos elementos (nombres)
@@ -308,12 +319,12 @@ public class App extends JFrame implements ActionListener{
                                 7.- Hallar ruta mas corta desde el origen (indices)
                                 8.- Guardar grafo
                                 9.- Cargar grafo
-                                Ingrese una opcion:
+                                10.- Volver
                                 """);
                             sema.acquire();
                             if(myApp.box.equals("/back")){continue volver;}
                             op=Integer.parseInt(myApp.box);
-                        }while(op<0||op>9);
+                        }while(op<0||op>10);
 
                         switch(op){
                             case 1:{
@@ -453,7 +464,10 @@ public class App extends JFrame implements ActionListener{
                                 grafo = Grafo.cargar();
                                 break;
                             }
-
+                            default:{
+                                myApp.box="/back";
+                                break;
+                            }
                         }
                     } while (!myApp.box.equals("/back"));
 
@@ -474,14 +488,13 @@ public class App extends JFrame implements ActionListener{
     public static String menu(){
         return """
                 INGRESAR OPCION
-
                 1.- Agregar contacto
                 2.- Editar contacto
                 3.- Buscar telefono por nombre
                 4.- Borrar contacto
                 5.- Ordenar contactos alfabeticamente
                 6.- VACIAR lista de contactos
-                7.- Organizar visitas individuales segun tiempo disponible
+                7.- Organizar visitas segun horarios disponibles
                 8.- Exportar contactos
                 9.- Importar contactos
                 10.- Menu de citas
