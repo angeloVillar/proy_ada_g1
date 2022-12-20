@@ -6,6 +6,7 @@ import javax.swing.*;
 public class Arbol implements Serializable {
     private Nodo raiz; //La estructura se guardara a partir de este nodo
     private int cant; //Contador
+    private boolean flag = false;
 
     //Constructor
     public Arbol(){
@@ -26,6 +27,7 @@ public class Arbol implements Serializable {
     //Las llamadas recursivas se acumulan hasta que encuentra un nodo nulo
     private Nodo addR(Nodo now, String tel, String nombre, int inicio, int fin){
         if(now == null){
+            flag=true;
             return new Nodo(tel, nombre, inicio, fin); //crea un nuevo nodo con los datos en esta posicion
         }
         if(comparar(nombre, now.nombre) < 0){
@@ -41,7 +43,10 @@ public class Arbol implements Serializable {
     //Metodo para acceder al metodo recursivo desde main
     public void add(String tel, String nombre, int inicio, int fin){
         raiz = addR(raiz, tel, nombre, inicio, fin);
-        cant++;
+        if(flag){
+            cant++;
+            flag=false;
+        }
     }
 
     //Metodo recursivo para buscar un contacto
@@ -76,7 +81,7 @@ public class Arbol implements Serializable {
             return null;
         }
         if(comparar(nombre, now.nombre) == 0){
-
+            flag = true;
             if(now.left == null && now.right == null){
                 return null;
             }
@@ -102,7 +107,10 @@ public class Arbol implements Serializable {
     //Metodo para acceder al metodo recursivo desde main
     public void borrar(String nombre){
         raiz = borrarR(raiz, nombre);
-        cant--;
+        if(flag){
+            cant--;
+            flag = false;
+        }
     }
 
     //Metodo auxiliar para el metodo borrar
