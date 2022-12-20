@@ -1,3 +1,4 @@
+import java.io.*;
 import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -295,10 +296,7 @@ public class App extends JFrame implements ActionListener{
                     break;
                 }
                 case 8:{
-                    arbol.guardar("contactos.txt");
-                    java.awt.Toolkit.getDefaultToolkit().beep();
-                    JOptionPane.showConfirmDialog(null, "Los contactos fueron exportados",
-                            "Contactos", JOptionPane.DEFAULT_OPTION);
+                    arbol.guardar("contactos.txt",0);
                     break;
                 }
                 case 9:{
@@ -502,25 +500,22 @@ public class App extends JFrame implements ActionListener{
                     for(int i=0;i<cant;i++){
                         Random r = new Random();
                         tlf=String.valueOf(r.nextInt((999999999 - 900000000) + 1) + 900000000);
-                        nom=String.valueOf(r.nextInt((cant - 1) + 1) + 1);
+                        nom=String.valueOf(i+1);
                         h1=r.nextInt((23 - 00) + 1) + 00;
                         m1=(r.nextInt((59 - 00) + 1) + 00);
-                        System.out.println(h1);
                         ini=String.format("%02d",h1)+":"+String.format("%02d",m1);
                         do{
                             h2=r.nextInt((23 - 00) + 1) + 00;
+                        }while(h2<h1);
+                        do{
                             m2=(r.nextInt((59 - 00) + 1) + 00);
-                            fn=String.format("%02d",h2)+":"+String.format("%02d",m2);
-                        }while(h2<h1||(h2==h1&&m2<m1));
+                        }while(h2==h1&&m2<m1);
+                        fn=String.format("%02d",h2)+":"+String.format("%02d",m2);
                         arbol.add(tlf, nom, Conversion.stringToTime(ini), Conversion.stringToTime(fn));
                     }
 
-                    arbol.guardar("prueba.txt");
-                    long endTime = System.currentTimeMillis();
+                    long endTime = arbol.guardar("prueba.txt",1);
                     System.out.println("Tiempo de ejecución de la prueba para agregar "+cant+" contactos: "+(endTime-startTime)+" ms");
-                    java.awt.Toolkit.getDefaultToolkit().beep();
-                    JOptionPane.showConfirmDialog(null, "Los contactos fueron exportados",
-                            "Contactos", JOptionPane.DEFAULT_OPTION);
                     break;
                 }
                 default:{

@@ -2,6 +2,7 @@ package arbol;
 
 import java.io.*;
 import javax.swing.*;
+import java.util.Date;
 
 public class Arbol implements Serializable {
     private Nodo raiz; //La estructura se guardara a partir de este nodo
@@ -207,7 +208,7 @@ public class Arbol implements Serializable {
     }
 
     //Serializa el arbol en un bloc de notas
-    public void guardar(String path) throws IOException, ClassNotFoundException {
+    public long guardar(String path,int op) throws IOException, ClassNotFoundException {
         boolean flag = false;
         File f = new File(path);
         Nodo temp = raiz;
@@ -219,10 +220,11 @@ public class Arbol implements Serializable {
         out.writeObject(raiz);
         out.close();
         if(flag){raiz = temp;}
-        /* 
+        if(op==1) return System.currentTimeMillis();
         java.awt.Toolkit.getDefaultToolkit().beep();
         JOptionPane.showConfirmDialog(null, "Los contactos fueron exportados",
-                "Contactos", JOptionPane.DEFAULT_OPTION);*/
+                "Contactos", JOptionPane.DEFAULT_OPTION);
+        return 0;
     }
 
     //Deserializa el arbol si encuentra un archivo con los datos del objeto
