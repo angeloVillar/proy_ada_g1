@@ -207,26 +207,27 @@ public class Arbol implements Serializable {
     }
 
     //Serializa el arbol en un bloc de notas
-    public void guardar() throws IOException, ClassNotFoundException {
+    public void guardar(String path) throws IOException, ClassNotFoundException {
         boolean flag = false;
-        File f = new File("contactos.txt");
+        File f = new File(path);
         Nodo temp = raiz;
         if(f.exists() && !f.isDirectory()) {
-            cargar(1);
+            cargar(1,path);
             flag = true;
         }
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("contactos.txt"));
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path));
         out.writeObject(raiz);
         out.close();
         if(flag){raiz = temp;}
+        /* 
         java.awt.Toolkit.getDefaultToolkit().beep();
         JOptionPane.showConfirmDialog(null, "Los contactos fueron exportados",
-                "Contactos", JOptionPane.DEFAULT_OPTION);
+                "Contactos", JOptionPane.DEFAULT_OPTION);*/
     }
 
     //Deserializa el arbol si encuentra un archivo con los datos del objeto
-    public void cargar(int op) throws ClassNotFoundException, IOException {
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("contactos.txt"));
+    public void cargar(int op,String path) throws ClassNotFoundException, IOException {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(path));
         Nodo temp = raiz;
         raiz = (Nodo)in.readObject();
         if(temp != null){

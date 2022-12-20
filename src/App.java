@@ -7,7 +7,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.Random;
 import java.util.concurrent.Semaphore;
+import java.util.random.*;
 
 import arbol.*;
 import ex.WrongInputException;
@@ -293,11 +295,14 @@ public class App extends JFrame implements ActionListener{
                     break;
                 }
                 case 8:{
-                    arbol.guardar();
+                    arbol.guardar("contactos.txt");
+                    java.awt.Toolkit.getDefaultToolkit().beep();
+                    JOptionPane.showConfirmDialog(null, "Los contactos fueron exportados",
+                            "Contactos", JOptionPane.DEFAULT_OPTION);
                     break;
                 }
                 case 9:{
-                    arbol.cargar(0);
+                    arbol.cargar(0,"contactos.txt");
                     break;
                 }
                 case 10:{
@@ -482,6 +487,42 @@ public class App extends JFrame implements ActionListener{
 
                     break;
                 }
+                case 11:{
+                    int cant=0,h1=0,h2=0,m1=0,m2=0;
+                    String tlf,nom,ini,fn;
+                    myApp.instruccion.setText("Numero de contactos: ");
+                    sema.acquire();
+                    if(myApp.box.equals("/back")){continue volver;}
+                    try {
+                        cant=Integer.parseInt(myApp.box);
+                    } catch (NumberFormatException e) {
+                        continue volver;
+                    }
+                    long startTime = System.currentTimeMillis();
+                    for(int i=0;i<cant;i++){
+                        Random r = new Random();
+                        tlf=String.valueOf(r.nextInt((999999999 - 900000000) + 1) + 900000000);
+                        nom=String.valueOf(r.nextInt((cant - 1) + 1) + 1);
+                        h1=r.nextInt((23 - 00) + 1) + 00;
+                        m1=(r.nextInt((59 - 00) + 1) + 00);
+                        System.out.println(h1);
+                        ini=String.format("%02d",h1)+":"+String.format("%02d",m1);
+                        do{
+                            h2=r.nextInt((23 - 00) + 1) + 00;
+                            m2=(r.nextInt((59 - 00) + 1) + 00);
+                            fn=String.format("%02d",h2)+":"+String.format("%02d",m2);
+                        }while(h2<h1||(h2==h1&&m2<m1));
+                        arbol.add(tlf, nom, Conversion.stringToTime(ini), Conversion.stringToTime(fn));
+                    }
+
+                    arbol.guardar("prueba.txt");
+                    long endTime = System.currentTimeMillis();
+                    System.out.println("Tiempo de ejecución de la prueba para agregar "+cant+" contactos: "+(endTime-startTime)+" ms");
+                    java.awt.Toolkit.getDefaultToolkit().beep();
+                    JOptionPane.showConfirmDialog(null, "Los contactos fueron exportados",
+                            "Contactos", JOptionPane.DEFAULT_OPTION);
+                    break;
+                }
                 default:{
                     break;
                 }
@@ -506,6 +547,7 @@ public class App extends JFrame implements ActionListener{
                 8.- Exportar contactos
                 9.- Importar contactos
                 10.- Menu de citas
+                11.- Prueba agregar contactos
                 """;
     }
 
