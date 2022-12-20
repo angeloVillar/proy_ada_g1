@@ -486,18 +486,18 @@ public class App extends JFrame implements ActionListener{
                     break;
                 }
                 case 11:{
-                    int cant=0,h1=0,h2=0,m1=0,m2=0;
+                    int n=0,h1=0,h2=0,m1=0,m2=0;
                     String tlf,nom,ini,fn;
                     myApp.instruccion.setText("Numero de contactos: ");
                     sema.acquire();
                     if(myApp.box.equals("/back")){continue volver;}
                     try {
-                        cant=Integer.parseInt(myApp.box);
+                        n=Integer.parseInt(myApp.box);
                     } catch (NumberFormatException e) {
                         continue volver;
                     }
                     long startTime = System.currentTimeMillis();
-                    for(int i=0;i<cant;i++){
+                    for(int i=0;i<n;i++){
                         Random r = new Random();
                         tlf=String.valueOf(r.nextInt((999999999 - 900000000) + 1) + 900000000);
                         nom=String.valueOf(i+1);
@@ -512,10 +512,11 @@ public class App extends JFrame implements ActionListener{
                         }while(h2==h1&&m2<m1);
                         fn=String.format("%02d",h2)+":"+String.format("%02d",m2);
                         arbol.add(tlf, nom, Conversion.stringToTime(ini), Conversion.stringToTime(fn));
+                        //System.out.println(i);
                     }
 
                     long endTime = arbol.guardar("prueba.txt",1);
-                    System.out.println("Tiempo de ejecución de la prueba para agregar "+cant+" contactos: "+(endTime-startTime)+" ms");
+                    System.out.println("Tiempo de ejecución de la prueba para agregar "+n+" contactos: "+(endTime-startTime)+" ms");
                     break;
                 }
                 default:{

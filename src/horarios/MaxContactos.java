@@ -89,7 +89,7 @@ public class MaxContactos {
             }
 
             //Si el tiempo acumulado actual es mayor que el de la posicion anterior de la lista...
-            if(tiempo > lis.get(i-1).tiempo){
+            if(tiempo > lis.get(i-1).tiempo&&l>-1){
                 lis.get(i).setTiempo(tiempo);                       //Se actualiza el tiempo de la lista en la posicion actual
                 lis.get(i).setAux(lis.get(l).getAux().clone());     //Se reemplaza el Aux de la lista por la de la posicion l
                 lis.get(i).getAux().push(arr[i]);                   //Se agrega el nodo[i] a la Pila en Aux en la lista en i
